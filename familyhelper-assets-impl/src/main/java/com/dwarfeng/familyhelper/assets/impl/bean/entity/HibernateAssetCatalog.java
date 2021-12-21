@@ -5,8 +5,6 @@ import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -18,7 +16,7 @@ import java.util.Set;
 })
 public class HibernateAssetCatalog implements Bean {
 
-    private static final long serialVersionUID = 8322016824030427941L;
+    private static final long serialVersionUID = 8075968508705691821L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -28,16 +26,6 @@ public class HibernateAssetCatalog implements Bean {
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "name", length = Constraints.LENGTH_NAME, nullable = false)
     private String name;
-
-    @Column(name = "card_type", length = Constraints.LENGTH_TYPE)
-    private String cardType;
-
-    @Column(name = "recorded_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastRecordedDate;
-
-    @Column(name = "total_value")
-    private BigDecimal totalValue;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
@@ -78,30 +66,6 @@ public class HibernateAssetCatalog implements Bean {
         this.name = name;
     }
 
-    public String getCardType() {
-        return cardType;
-    }
-
-    public void setCardType(String cardType) {
-        this.cardType = cardType;
-    }
-
-    public Date getLastRecordedDate() {
-        return lastRecordedDate;
-    }
-
-    public void setLastRecordedDate(Date lastRecordedDate) {
-        this.lastRecordedDate = lastRecordedDate;
-    }
-
-    public BigDecimal getTotalValue() {
-        return totalValue;
-    }
-
-    public void setTotalValue(BigDecimal totalValue) {
-        this.totalValue = totalValue;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -126,5 +90,11 @@ public class HibernateAssetCatalog implements Bean {
         this.poacs = poacs;
     }
 
-
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "longId = " + longId + ", " +
+                "name = " + name + ", " +
+                "remark = " + remark + ")";
+    }
 }
