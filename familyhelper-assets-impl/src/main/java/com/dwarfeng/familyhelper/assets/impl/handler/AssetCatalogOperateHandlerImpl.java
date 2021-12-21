@@ -21,6 +21,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Component
@@ -49,7 +50,7 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
 
             // 2. 根据 assetCatalogCreateInfo 以及创建的规则组合 资产目录 实体。
             AssetCatalog assetCatalog = new AssetCatalog(
-                    null, assetCatalogCreateInfo.getName(), assetCatalogCreateInfo.getRemark()
+                    null, assetCatalogCreateInfo.getName(), assetCatalogCreateInfo.getRemark(), 0, new Date()
             );
 
             // 3. 插入资产目录实体，并获取生成的主键。

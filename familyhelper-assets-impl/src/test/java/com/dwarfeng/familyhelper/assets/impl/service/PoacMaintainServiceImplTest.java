@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -41,7 +43,7 @@ public class PoacMaintainServiceImplTest {
 
     @Before
     public void setUp() {
-        assetCatalog = new AssetCatalog(new LongIdKey(ASSET_CATALOG_ID), "name", "remark");
+        assetCatalog = new AssetCatalog(new LongIdKey(ASSET_CATALOG_ID), "name", "remark", 12450, new Date());
         user = new User(new StringIdKey(USER_ID), "remark");
         poac = new Poac(new PoacKey(ASSET_CATALOG_ID, USER_ID), 233, "remark");
     }

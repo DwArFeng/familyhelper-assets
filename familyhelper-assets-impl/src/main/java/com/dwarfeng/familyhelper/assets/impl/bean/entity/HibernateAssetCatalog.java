@@ -5,6 +5,7 @@ import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Set;
 })
 public class HibernateAssetCatalog implements Bean {
 
-    private static final long serialVersionUID = 8075968508705691821L;
+    private static final long serialVersionUID = 951596182085929515L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -29,6 +30,13 @@ public class HibernateAssetCatalog implements Bean {
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
+
+    @Column(name = "item_count", nullable = false)
+    private int itemCount;
+
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
 
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateItem.class, mappedBy = "assetCatalog")
@@ -74,6 +82,22 @@ public class HibernateAssetCatalog implements Bean {
         this.remark = remark;
     }
 
+    public int getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
     public Set<HibernateItem> getItems() {
         return items;
     }
@@ -95,6 +119,8 @@ public class HibernateAssetCatalog implements Bean {
         return getClass().getSimpleName() + "(" +
                 "longId = " + longId + ", " +
                 "name = " + name + ", " +
-                "remark = " + remark + ")";
+                "remark = " + remark + ", " +
+                "itemCount = " + itemCount + ", " +
+                "createdDate = " + createdDate + ")";
     }
 }

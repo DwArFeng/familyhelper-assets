@@ -52,9 +52,7 @@ public class ItemMaintainServiceImplTest {
         parent = new Item(
                 null, null, null, "name", "item_type", new Date(), new Date(), new Date(), 0, "remark"
         );
-        assetCatalog = new AssetCatalog(
-                null, "name", "remark"
-        );
+        assetCatalog = new AssetCatalog(null, "name", "remark", 12450, new Date());
         itemLabels = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             ItemLabel itemLabel = new ItemLabel(

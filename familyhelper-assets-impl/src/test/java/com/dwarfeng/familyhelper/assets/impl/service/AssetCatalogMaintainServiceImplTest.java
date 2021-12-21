@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -29,7 +30,7 @@ public class AssetCatalogMaintainServiceImplTest {
     public void setUp() {
         assetCatalogs = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            AssetCatalog assetCatalog = new AssetCatalog(null, "name", "remark");
+            AssetCatalog assetCatalog = new AssetCatalog(null, "name", "remark", 12450, new Date());
             assetCatalogs.add(assetCatalog);
         }
     }

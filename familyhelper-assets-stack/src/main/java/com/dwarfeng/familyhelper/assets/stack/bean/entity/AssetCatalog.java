@@ -3,6 +3,8 @@ package com.dwarfeng.familyhelper.assets.stack.bean.entity;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
+import java.util.Date;
+
 /**
  * 资产目录。
  *
@@ -11,19 +13,23 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  */
 public class AssetCatalog implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -1608817712559286428L;
+    private static final long serialVersionUID = -4711173575533332984L;
 
     private LongIdKey key;
     private String name;
     private String remark;
+    private int itemCount;
+    private Date createdDate;
 
     public AssetCatalog() {
     }
 
-    public AssetCatalog(LongIdKey key, String name, String remark) {
+    public AssetCatalog(LongIdKey key, String name, String remark, int itemCount, Date createdDate) {
         this.key = key;
         this.name = name;
         this.remark = remark;
+        this.itemCount = itemCount;
+        this.createdDate = createdDate;
     }
 
     @Override
@@ -52,12 +58,30 @@ public class AssetCatalog implements Entity<LongIdKey> {
         this.remark = remark;
     }
 
+    public int getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
     @Override
     public String toString() {
         return "AssetCatalog{" +
                 "key=" + key +
                 ", name='" + name + '\'' +
                 ", remark='" + remark + '\'' +
+                ", itemCount=" + itemCount +
+                ", createdDate=" + createdDate +
                 '}';
     }
 }

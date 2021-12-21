@@ -10,6 +10,8 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import java.util.Date;
 
 /**
  * WebInput 资产目录。
@@ -19,13 +21,13 @@ import javax.validation.constraints.NotNull;
  */
 public class WebInputAssetCatalog implements Bean {
 
-    private static final long serialVersionUID = -2866703785181045401L;
+    private static final long serialVersionUID = -5660476280088103005L;
 
     public static AssetCatalog toStackBean(WebInputAssetCatalog webInputAssetCatalog) {
         return new AssetCatalog(
-                WebInputLongIdKey.toStackBean(webInputAssetCatalog.getKey()),
-                webInputAssetCatalog.getName(),
-                webInputAssetCatalog.getRemark()
+                WebInputLongIdKey.toStackBean(webInputAssetCatalog.getKey()), webInputAssetCatalog.getName(),
+                webInputAssetCatalog.getRemark(), webInputAssetCatalog.getItemCount(),
+                webInputAssetCatalog.getCreatedDate()
         );
     }
 
@@ -41,6 +43,13 @@ public class WebInputAssetCatalog implements Bean {
 
     @JSONField(name = "remark")
     private String remark;
+
+    @JSONField(name = "item_count")
+    @PositiveOrZero
+    private int itemCount;
+
+    @JSONField(name = "created_date")
+    private Date createdDate;
 
     public WebInputAssetCatalog() {
     }
@@ -69,12 +78,30 @@ public class WebInputAssetCatalog implements Bean {
         this.remark = remark;
     }
 
+    public int getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
     @Override
     public String toString() {
         return "WebInputAssetCatalog{" +
                 "key=" + key +
                 ", name='" + name + '\'' +
                 ", remark='" + remark + '\'' +
+                ", itemCount=" + itemCount +
+                ", createdDate=" + createdDate +
                 '}';
     }
 }
