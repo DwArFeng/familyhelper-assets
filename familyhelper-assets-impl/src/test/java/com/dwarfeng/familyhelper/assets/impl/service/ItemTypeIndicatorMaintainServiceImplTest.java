@@ -31,7 +31,7 @@ public class ItemTypeIndicatorMaintainServiceImplTest {
         itemTypeIndicators = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             ItemTypeIndicator itemTypeIndicator = new ItemTypeIndicator(
-                    new StringIdKey("fund_change_type_indicator_test" + i),
+                    new StringIdKey("item_type_indicator_test" + i),
                     "label",
                     "remark"
             );

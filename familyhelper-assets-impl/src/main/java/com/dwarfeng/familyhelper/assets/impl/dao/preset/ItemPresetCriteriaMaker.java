@@ -27,6 +27,9 @@ public class ItemPresetCriteriaMaker implements PresetCriteriaMaker {
             case ItemMaintainService.CHILD_FOR_LABEL:
                 childForLabel(detachedCriteria, objects);
                 break;
+            case ItemMaintainService.CHILD_FOR_ASSET_CATALOG_ROOT:
+                childForAssetCatalogRoot(detachedCriteria, objects);
+                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
@@ -77,4 +80,19 @@ public class ItemPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    private void childForAssetCatalogRoot(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("assetCatalogLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objects[0];
+                detachedCriteria.add(
+                        Restrictions.eqOrIsNull("assetCatalogLongId", longIdKey.getLongId())
+                );
+            }
+            detachedCriteria.add(Restrictions.isNull("parentLongId"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
 }

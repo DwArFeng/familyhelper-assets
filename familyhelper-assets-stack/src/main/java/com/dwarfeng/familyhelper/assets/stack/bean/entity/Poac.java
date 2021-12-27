@@ -11,11 +11,7 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
  */
 public class Poac implements Entity<PoacKey> {
 
-    public static final int PERMISSION_LEVEL_OWNER = 0;
-    public static final int PERMISSION_LEVEL_GUEST = 1;
-    public static final int PERMISSION_LEVEL_MODIFIER = 2;
-
-    private static final long serialVersionUID = -3235761022406676077L;
+    private static final long serialVersionUID = -7960262894409709506L;
 
     private PoacKey key;
     private int permissionLevel;

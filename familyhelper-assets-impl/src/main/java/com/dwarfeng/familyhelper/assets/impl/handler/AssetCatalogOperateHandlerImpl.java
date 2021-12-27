@@ -1,5 +1,6 @@
 package com.dwarfeng.familyhelper.assets.impl.handler;
 
+import com.dwarfeng.familyhelper.assets.sdk.util.Constants;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.AssetCatalogCreateInfo;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.AssetCatalogUpdateInfo;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.PermissionRemoveInfo;
@@ -59,7 +60,7 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
             // 4. 由资产目录实体生成的主键和用户主键组合权限信息，并插入。
             Poac poac = new Poac(
                     new PoacKey(assetCatalogKey.getLongId(), userKey.getStringId()),
-                    Poac.PERMISSION_LEVEL_OWNER,
+                    Constants.PERMISSION_LEVEL_OWNER,
                     "创建资产目录时自动插入，赋予创建人所有者权限"
             );
             poacMaintainService.insert(poac);
@@ -152,10 +153,10 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
             // 6. 通过入口信息组合权限实体，并进行插入或更新操作。
             String permissionLabel;
             switch (permissionLevel) {
-                case Poac.PERMISSION_LEVEL_GUEST:
+                case Constants.PERMISSION_LEVEL_GUEST:
                     permissionLabel = "目标";
                     break;
-                case Poac.PERMISSION_LEVEL_OWNER:
+                case Constants.PERMISSION_LEVEL_OWNER:
                     permissionLabel = "所有者";
                     break;
                 default:
@@ -239,7 +240,7 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
 
             // 3. 查看 Poac.permissionLevel 是否为 Poac.PERMISSION_LEVEL_OWNER，如果不是，则没有权限。
             Poac poac = poacMaintainService.get(poacKey);
-            if (poac.getPermissionLevel() != Poac.PERMISSION_LEVEL_OWNER) {
+            if (!Objects.equals(poac.getPermissionLevel(), Constants.PERMISSION_LEVEL_OWNER)) {
                 throw new UserNotPermittedException(userKey, assetCatalogKey);
             }
         } catch (ServiceException e) {
@@ -248,10 +249,10 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
     }
 
     private void makeSurePermissionLevelValid(int permissionLevel) throws HandlerException {
-        if (permissionLevel == Poac.PERMISSION_LEVEL_GUEST) {
+        if (permissionLevel == Constants.PERMISSION_LEVEL_GUEST) {
             return;
         }
-        if (permissionLevel == Poac.PERMISSION_LEVEL_MODIFIER) {
+        if (permissionLevel == Constants.PERMISSION_LEVEL_MODIFIER) {
             return;
         }
         throw new InvalidPermissionLevelException(permissionLevel);

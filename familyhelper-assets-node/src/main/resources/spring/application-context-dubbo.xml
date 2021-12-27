@@ -25,10 +25,12 @@
                    ref="assetCatalogMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.assets.stack.service.AssetCatalogOperateService"
                    ref="assetCatalogOperateServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.assets.stack.service.ItemLabelMaintainService"
-                   ref="itemLabelMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.assets.stack.service.ItemMaintainService"
                    ref="itemMaintainServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.familyhelper.assets.stack.service.ItemOperateService"
+                   ref="itemOperateServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.familyhelper.assets.stack.service.ItemLabelMaintainService"
+                   ref="itemLabelMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.assets.stack.service.ItemPropertyMaintainService"
                    ref="itemPropertyMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.assets.stack.service.ItemTypeIndicatorMaintainService"

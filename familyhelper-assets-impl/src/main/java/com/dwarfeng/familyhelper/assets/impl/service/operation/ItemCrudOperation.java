@@ -21,6 +21,7 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,11 +86,14 @@ public class ItemCrudOperation implements BatchCrudOperation<LongIdKey, Item> {
 
     @Override
     public void delete(LongIdKey key) throws Exception {
-        // 查找并清除所有相关的父节点关联。
-        List<Item> childItems = itemDao.lookup(ItemMaintainService.CHILD_FOR_PARENT, new Object[]{key});
-        childItems.forEach(i -> i.setParentKey(null));
-        itemCache.batchDelete(childItems.stream().map(Item::getKey).collect(Collectors.toList()));
-        itemDao.batchUpdate(childItems);
+        // 递归寻找并删除 Item 自身的子孙节点。
+        List<Item> descendantItems = new ArrayList<>();
+        findDescendant(descendantItems, itemDao.get(key));
+        descendantItems.forEach((item -> item.setParentKey(null)));
+        itemDao.batchUpdate(descendantItems);
+        List<LongIdKey> descendantItemKeys = descendantItems.stream().map(Item::getKey).collect(Collectors.toList());
+        itemCache.batchDelete(descendantItemKeys);
+        itemDao.batchDelete(descendantItemKeys);
 
         // 查找并清除所有相关的标签关联。
         List<StringIdKey> itemLabelKeys = itemLabelDao.lookup(
@@ -108,6 +112,14 @@ public class ItemCrudOperation implements BatchCrudOperation<LongIdKey, Item> {
         // 删除 Item 自身。
         itemCache.delete(key);
         itemDao.delete(key);
+    }
+
+    private void findDescendant(List<Item> descendantItemKeys, Item item) throws Exception {
+        List<Item> childItems = itemDao.lookup(ItemMaintainService.CHILD_FOR_PARENT, new Object[]{item.getKey()});
+        for (Item childItem : childItems) {
+            descendantItemKeys.add(childItem);
+            findDescendant(descendantItemKeys, childItem);
+        }
     }
 
     @Override

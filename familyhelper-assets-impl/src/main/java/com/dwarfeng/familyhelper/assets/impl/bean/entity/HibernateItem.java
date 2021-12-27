@@ -63,7 +63,7 @@ public class HibernateItem implements Bean {
 
     @ManyToOne(targetEntity = HibernateAssetCatalog.class)
     @JoinColumns({ //
-            @JoinColumn(name = "account_book_id", referencedColumnName = "id", insertable = false, updatable = false), //
+            @JoinColumn(name = "asset_catalog_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateAssetCatalog assetCatalog;
 

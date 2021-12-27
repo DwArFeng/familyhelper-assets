@@ -20,6 +20,12 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(20), "user not permitted");
     public static final ServiceException.Code INVALID_PERMISSION_LEVEL =
             new ServiceException.Code(offset(30), "invalid permission level");
+    public static final ServiceException.Code ITEM_NOT_EXISTS =
+            new ServiceException.Code(offset(40), "item not exists");
+    public static final ServiceException.Code ILLEGAL_ITEM_STATE =
+            new ServiceException.Code(offset(50), "illegal item state");
+    public static final ServiceException.Code ITEM_LABEL_NOT_EXISTS =
+            new ServiceException.Code(offset(60), "item label not exists");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -48,6 +54,9 @@ public final class ServiceExceptionCodes {
         USER_NOT_EXISTS.setCode(offset(10));
         USER_NOT_PERMITTED.setCode(offset(20));
         INVALID_PERMISSION_LEVEL.setCode(offset(30));
+        ITEM_NOT_EXISTS.setCode(offset(40));
+        ILLEGAL_ITEM_STATE.setCode(offset(50));
+        ITEM_LABEL_NOT_EXISTS.setCode(offset(60));
     }
 
     private ServiceExceptionCodes() {
