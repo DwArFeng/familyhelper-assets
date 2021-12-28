@@ -38,6 +38,10 @@ public class CacheConfiguration {
     private String poacPrefix;
     @Value("${cache.prefix.entity.user}")
     private String userPrefix;
+    @Value("${cache.prefix.entity.item_cover_info}")
+    private String itemCoverInfoPrefix;
+    @Value("${cache.prefix.entity.item_file_info}")
+    private String itemFileInfoPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -112,6 +116,26 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonUser>) template,
                 new StringIdStringKeyFormatter(userPrefix),
                 new DozerBeanTransformer<>(User.class, FastJsonUser.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, ItemCoverInfo, FastJsonItemCoverInfo> itemCoverInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonItemCoverInfo>) template,
+                new LongIdStringKeyFormatter(itemCoverInfoPrefix),
+                new DozerBeanTransformer<>(ItemCoverInfo.class, FastJsonItemCoverInfo.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, ItemFileInfo, FastJsonItemFileInfo> itemFileInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonItemFileInfo>) template,
+                new LongIdStringKeyFormatter(itemFileInfoPrefix),
+                new DozerBeanTransformer<>(ItemFileInfo.class, FastJsonItemFileInfo.class, mapper)
         );
     }
 }

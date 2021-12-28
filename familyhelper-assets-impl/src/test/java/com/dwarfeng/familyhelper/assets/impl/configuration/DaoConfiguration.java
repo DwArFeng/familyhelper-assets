@@ -34,6 +34,8 @@ public class DaoConfiguration {
     private final ItemLabelPresetCriteriaMaker itemLabelPresetCriteriaMaker;
     private final ItemPropertyPresetCriteriaMaker itemPropertyPresetCriteriaMaker;
     private final PoacPresetCriteriaMaker poacPresetCriteriaMaker;
+    private final ItemCoverInfoPresetCriteriaMaker itemCoverInfoPresetCriteriaMaker;
+    private final ItemFileInfoPresetCriteriaMaker itemFileInfoPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -44,7 +46,9 @@ public class DaoConfiguration {
             ItemPresetCriteriaMaker itemPresetCriteriaMaker,
             ItemLabelPresetCriteriaMaker itemLabelPresetCriteriaMaker,
             ItemPropertyPresetCriteriaMaker itemPropertyPresetCriteriaMaker,
-            PoacPresetCriteriaMaker poacPresetCriteriaMaker
+            PoacPresetCriteriaMaker poacPresetCriteriaMaker,
+            ItemCoverInfoPresetCriteriaMaker itemCoverInfoPresetCriteriaMaker,
+            ItemFileInfoPresetCriteriaMaker itemFileInfoPresetCriteriaMaker
     ) {
         this.template = template;
         this.mapper = mapper;
@@ -53,6 +57,8 @@ public class DaoConfiguration {
         this.itemLabelPresetCriteriaMaker = itemLabelPresetCriteriaMaker;
         this.itemPropertyPresetCriteriaMaker = itemPropertyPresetCriteriaMaker;
         this.poacPresetCriteriaMaker = poacPresetCriteriaMaker;
+        this.itemCoverInfoPresetCriteriaMaker = itemCoverInfoPresetCriteriaMaker;
+        this.itemFileInfoPresetCriteriaMaker = itemFileInfoPresetCriteriaMaker;
     }
 
     @Bean
@@ -279,6 +285,70 @@ public class DaoConfiguration {
                 HibernateUser.class,
                 new DefaultDeletionMod<>(),
                 batchSize
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, ItemCoverInfo, HibernateItemCoverInfo>
+    itemCoverInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
+                new DozerBeanTransformer<>(ItemCoverInfo.class, HibernateItemCoverInfo.class, mapper),
+                HibernateItemCoverInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<ItemCoverInfo, HibernateItemCoverInfo> itemCoverInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(ItemCoverInfo.class, HibernateItemCoverInfo.class, mapper),
+                HibernateItemCoverInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<ItemCoverInfo, HibernateItemCoverInfo> itemCoverInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(ItemCoverInfo.class, HibernateItemCoverInfo.class, mapper),
+                HibernateItemCoverInfo.class,
+                itemCoverInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, ItemFileInfo, HibernateItemFileInfo>
+    itemFileInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
+                new DozerBeanTransformer<>(ItemFileInfo.class, HibernateItemFileInfo.class, mapper),
+                HibernateItemFileInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<ItemFileInfo, HibernateItemFileInfo> itemFileInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(ItemFileInfo.class, HibernateItemFileInfo.class, mapper),
+                HibernateItemFileInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<ItemFileInfo, HibernateItemFileInfo> itemFileInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(ItemFileInfo.class, HibernateItemFileInfo.class, mapper),
+                HibernateItemFileInfo.class,
+                itemFileInfoPresetCriteriaMaker
         );
     }
 }

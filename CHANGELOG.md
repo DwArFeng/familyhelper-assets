@@ -14,6 +14,8 @@
   - com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemTypeIndicator。
   - com.dwarfeng.familyhelper.assets.stack.bean.entity.Poac。
   - com.dwarfeng.familyhelper.assets.stack.bean.entity.User。
+  - com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemCoverInfoDao。
+  - com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemFileInfoDao。
 
 - 完成 node 模块，打包测试及启动测试通过。
 

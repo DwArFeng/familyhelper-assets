@@ -27,7 +27,6 @@ public class ItemMaintainServiceImpl implements ItemMaintainService {
     private final DaoOnlyPresetLookupService<Item> presetLookupService;
     private final DaoOnlyBatchRelationService<LongIdKey, StringIdKey> relationService;
 
-
     public ItemMaintainServiceImpl(
             CustomBatchCrudService<LongIdKey, Item> crudService,
             DaoOnlyEntireLookupService<Item> entireLookupService,

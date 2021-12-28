@@ -1,18 +1,10 @@
 package com.dwarfeng.familyhelper.assets.impl.service.operation;
 
-import com.dwarfeng.familyhelper.assets.stack.bean.entity.Item;
-import com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemLabel;
-import com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemProperty;
+import com.dwarfeng.familyhelper.assets.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.assets.stack.bean.key.ItemPropertyKey;
-import com.dwarfeng.familyhelper.assets.stack.cache.ItemCache;
-import com.dwarfeng.familyhelper.assets.stack.cache.ItemLabelCache;
-import com.dwarfeng.familyhelper.assets.stack.cache.ItemPropertyCache;
-import com.dwarfeng.familyhelper.assets.stack.dao.ItemDao;
-import com.dwarfeng.familyhelper.assets.stack.dao.ItemLabelDao;
-import com.dwarfeng.familyhelper.assets.stack.dao.ItemPropertyDao;
-import com.dwarfeng.familyhelper.assets.stack.service.ItemLabelMaintainService;
-import com.dwarfeng.familyhelper.assets.stack.service.ItemMaintainService;
-import com.dwarfeng.familyhelper.assets.stack.service.ItemPropertyMaintainService;
+import com.dwarfeng.familyhelper.assets.stack.cache.*;
+import com.dwarfeng.familyhelper.assets.stack.dao.*;
+import com.dwarfeng.familyhelper.assets.stack.service.*;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -37,13 +29,21 @@ public class ItemCrudOperation implements BatchCrudOperation<LongIdKey, Item> {
     private final ItemPropertyDao itemPropertyDao;
     private final ItemPropertyCache itemPropertyCache;
 
+    private final ItemCoverInfoDao itemCoverInfoDao;
+    private final ItemCoverInfoCache itemCoverInfoCache;
+
+    private final ItemFileInfoDao itemFileInfoDao;
+    private final ItemFileInfoCache itemFileInfoCache;
+
     @Value("${cache.timeout.entity.item}")
     private long itemTimeout;
 
     public ItemCrudOperation(
             ItemDao itemDao, ItemCache itemCache,
             ItemLabelDao itemLabelDao, ItemLabelCache itemLabelCache,
-            ItemPropertyDao itemPropertyDao, ItemPropertyCache itemPropertyCache
+            ItemPropertyDao itemPropertyDao, ItemPropertyCache itemPropertyCache,
+            ItemCoverInfoDao itemCoverInfoDao, ItemCoverInfoCache itemCoverInfoCache,
+            ItemFileInfoDao itemFileInfoDao, ItemFileInfoCache itemFileInfoCache
     ) {
         this.itemDao = itemDao;
         this.itemCache = itemCache;
@@ -51,6 +51,10 @@ public class ItemCrudOperation implements BatchCrudOperation<LongIdKey, Item> {
         this.itemLabelCache = itemLabelCache;
         this.itemPropertyDao = itemPropertyDao;
         this.itemPropertyCache = itemPropertyCache;
+        this.itemCoverInfoDao = itemCoverInfoDao;
+        this.itemCoverInfoCache = itemCoverInfoCache;
+        this.itemFileInfoDao = itemFileInfoDao;
+        this.itemFileInfoCache = itemFileInfoCache;
     }
 
     @Override
@@ -108,6 +112,20 @@ public class ItemCrudOperation implements BatchCrudOperation<LongIdKey, Item> {
         ).stream().map(ItemProperty::getKey).collect(Collectors.toList());
         itemPropertyCache.batchDelete(itemPropertyKeys);
         itemPropertyDao.batchDelete(itemPropertyKeys);
+
+        // 查找并删除所有相关的项目封面信息。
+        List<LongIdKey> itemCoverInfoKeys = itemCoverInfoDao.lookup(
+                ItemCoverInfoMaintainService.CHILD_FOR_ITEM, new Object[]{key}
+        ).stream().map(ItemCoverInfo::getKey).collect(Collectors.toList());
+        itemCoverInfoCache.batchDelete(itemCoverInfoKeys);
+        itemCoverInfoDao.batchDelete(itemCoverInfoKeys);
+
+        // 查找并删除所有相关的项目文件信息。
+        List<LongIdKey> itemFileInfoKeys = itemFileInfoDao.lookup(
+                ItemFileInfoMaintainService.CHILD_FOR_ITEM, new Object[]{key}
+        ).stream().map(ItemFileInfo::getKey).collect(Collectors.toList());
+        itemFileInfoCache.batchDelete(itemFileInfoKeys);
+        itemFileInfoDao.batchDelete(itemFileInfoKeys);
 
         // 删除 Item 自身。
         itemCache.delete(key);

@@ -23,7 +23,7 @@ public class HibernateItem implements Bean {
     private Long longId;
 
     // -----------------------------------------------------------外键-----------------------------------------------------------
-    @Column(name = "parent_long_id")
+    @Column(name = "parent_id")
     private Long parentLongId;
 
     @Column(name = "asset_catalog_id")
@@ -57,7 +57,7 @@ public class HibernateItem implements Bean {
     // -----------------------------------------------------------多对一-----------------------------------------------------------
     @ManyToOne(targetEntity = HibernateItem.class)
     @JoinColumns({ //
-            @JoinColumn(name = "parent_long_id", referencedColumnName = "id", insertable = false, updatable = false), //
+            @JoinColumn(name = "parent_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateItem parent;
 
@@ -66,6 +66,13 @@ public class HibernateItem implements Bean {
             @JoinColumn(name = "asset_catalog_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateAssetCatalog assetCatalog;
+
+    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateItemFileInfo.class, mappedBy = "item")
+    private Set<HibernateItemFileInfo> itemFileInfos = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateItemCoverInfo.class, mappedBy = "item")
+    private Set<HibernateItemCoverInfo> itemCoverInfos = new HashSet<>();
 
     // -----------------------------------------------------------多对多-----------------------------------------------------------
     @ManyToMany(targetEntity = HibernateItemLabel.class)
@@ -199,6 +206,22 @@ public class HibernateItem implements Bean {
 
     public void setAssetCatalog(HibernateAssetCatalog assetCatalog) {
         this.assetCatalog = assetCatalog;
+    }
+
+    public Set<HibernateItemFileInfo> getItemFileInfos() {
+        return itemFileInfos;
+    }
+
+    public void setItemFileInfos(Set<HibernateItemFileInfo> itemFileInfos) {
+        this.itemFileInfos = itemFileInfos;
+    }
+
+    public Set<HibernateItemCoverInfo> getItemCoverInfos() {
+        return itemCoverInfos;
+    }
+
+    public void setItemCoverInfos(Set<HibernateItemCoverInfo> itemCoverInfos) {
+        this.itemCoverInfos = itemCoverInfos;
     }
 
     public Set<HibernateItemLabel> getLabels() {

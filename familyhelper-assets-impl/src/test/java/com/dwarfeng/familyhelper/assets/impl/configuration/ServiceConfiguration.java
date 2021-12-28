@@ -7,9 +7,7 @@ import com.dwarfeng.familyhelper.assets.impl.service.operation.UserCrudOperation
 import com.dwarfeng.familyhelper.assets.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.assets.stack.bean.key.ItemPropertyKey;
 import com.dwarfeng.familyhelper.assets.stack.bean.key.PoacKey;
-import com.dwarfeng.familyhelper.assets.stack.cache.ItemPropertyCache;
-import com.dwarfeng.familyhelper.assets.stack.cache.ItemTypeIndicatorCache;
-import com.dwarfeng.familyhelper.assets.stack.cache.PoacCache;
+import com.dwarfeng.familyhelper.assets.stack.cache.*;
 import com.dwarfeng.familyhelper.assets.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
@@ -41,6 +39,10 @@ public class ServiceConfiguration {
     private final PoacDao poacDao;
     private final PoacCache poacCache;
     private final UserCrudOperation userCrudOperation;
+    private final ItemCoverInfoDao itemCoverInfoDao;
+    private final ItemCoverInfoCache itemCoverInfoCache;
+    private final ItemFileInfoDao itemFileInfoDao;
+    private final ItemFileInfoCache itemFileInfoCache;
 
     @Value("${cache.timeout.entity.item_type_indicator}")
     private long itemTypeIndicatorTimeout;
@@ -48,6 +50,10 @@ public class ServiceConfiguration {
     private long itemPropertyTimeout;
     @Value("${cache.timeout.entity.poac}")
     private long poacTimeout;
+    @Value("${cache.timeout.entity.item_cover_info}")
+    private long itemCoverInfoTimeout;
+    @Value("${cache.timeout.entity.item_file_info}")
+    private long itemFileInfoTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration, DaoConfiguration daoConfiguration,
@@ -57,7 +63,9 @@ public class ServiceConfiguration {
             ItemPropertyDao itemPropertyDao, ItemPropertyCache itemPropertyCache,
             ItemTypeIndicatorDao itemTypeIndicatorDao, ItemTypeIndicatorCache itemTypeIndicatorCache,
             PoacDao poacDao, PoacCache poacCache,
-            UserCrudOperation userCrudOperation
+            UserCrudOperation userCrudOperation,
+            ItemCoverInfoDao itemCoverInfoDao, ItemCoverInfoCache itemCoverInfoCache,
+            ItemFileInfoDao itemFileInfoDao, ItemFileInfoCache itemFileInfoCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.daoConfiguration = daoConfiguration;
@@ -74,6 +82,10 @@ public class ServiceConfiguration {
         this.poacDao = poacDao;
         this.poacCache = poacCache;
         this.userCrudOperation = userCrudOperation;
+        this.itemCoverInfoDao = itemCoverInfoDao;
+        this.itemCoverInfoCache = itemCoverInfoCache;
+        this.itemFileInfoDao = itemFileInfoDao;
+        this.itemFileInfoCache = itemFileInfoCache;
     }
 
     @Bean
@@ -270,6 +282,66 @@ public class ServiceConfiguration {
         return new CustomBatchCrudService<>(
                 userCrudOperation,
                 new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, ItemCoverInfo> itemCoverInfoGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                itemCoverInfoDao,
+                itemCoverInfoCache,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                itemCoverInfoTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<ItemCoverInfo> itemCoverInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                itemCoverInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<ItemCoverInfo> itemCoverInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                itemCoverInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, ItemFileInfo> itemFileInfoGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                itemFileInfoDao,
+                itemFileInfoCache,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                itemFileInfoTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<ItemFileInfo> itemFileInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                itemFileInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<ItemFileInfo> itemFileInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                itemFileInfoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
