@@ -1,6 +1,7 @@
 package com.dwarfeng.familyhelper.assets.stack.service;
 
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCover;
+import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCoverOrderUpdateInfo;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCoverUploadInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -42,4 +43,14 @@ public interface ItemCoverOperateService extends Service {
      * @throws ServiceException 服务异常。
      */
     void removeItemCover(StringIdKey userKey, LongIdKey itemCoverKey) throws ServiceException;
+
+    /**
+     * 更新项目封面的顺序。
+     *
+     * @param userKey                  执行用户主键。
+     * @param itemCoverOrderUpdateInfo 项目封面顺序更新信息。
+     * @throws ServiceException 服务异常。
+     */
+    void updateItemCoverOrder(StringIdKey userKey, ItemCoverOrderUpdateInfo itemCoverOrderUpdateInfo)
+            throws ServiceException;
 }

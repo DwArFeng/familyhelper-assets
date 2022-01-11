@@ -4,6 +4,7 @@ import com.dwarfeng.familyhelper.assets.impl.exception.FileException;
 import com.dwarfeng.familyhelper.assets.impl.util.FtpConstants;
 import com.dwarfeng.familyhelper.assets.sdk.util.Constants;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCover;
+import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCoverOrderUpdateInfo;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCoverUploadInfo;
 import com.dwarfeng.familyhelper.assets.stack.bean.entity.Item;
 import com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemCoverInfo;
@@ -24,6 +25,7 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -161,6 +163,56 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
         return Long.toString(itemCoverKey.getLongId());
     }
 
+    @Override
+    public void updateItemCoverOrder(StringIdKey userKey, ItemCoverOrderUpdateInfo itemCoverOrderUpdateInfo)
+            throws HandlerException {
+        try {
+            List<LongIdKey> itemCoverKeys = itemCoverOrderUpdateInfo.getItemCoverKeys();
+
+            // 1. 特殊情况：itemCoverKeys 为空数组，则不执行任何逻辑。
+            if (itemCoverKeys.isEmpty()) {
+                return;
+            }
+
+            // 2. 确认用户存在。
+            makeSureUserExists(userKey);
+
+            // 3. 确认项目封面存在。
+            for (LongIdKey itemCoverKey : itemCoverKeys) {
+                makeSureItemCoverExists(itemCoverKey);
+            }
+
+            // 4. 确认项目封面属于同一个项目，且项目不为空。
+            makeSureItemCoverHasSameItem(itemCoverKeys);
+
+            // 5. 获取项目封面所属的项目。
+            LongIdKey itemKey = itemCoverInfoMaintainService.get(itemCoverKeys.get(0)).getItemKey();
+
+            // 6. 获取按照旧顺序排列的项目封面。
+            List<ItemCoverInfo> orderedItemCoverInfoList = itemCoverInfoMaintainService.lookup(
+                    ItemCoverInfoMaintainService.CHILD_FOR_ITEM_INDEX_ASC, new Object[]{itemKey}
+            ).getData();
+
+            // 7. 按照 itemCoverKeys 重新组织顺序。
+            orderedItemCoverInfoList.removeIf(i -> itemCoverKeys.contains(i.getKey()));
+            for (int i = itemCoverKeys.size() - 1; i >= 0; i--) {
+                orderedItemCoverInfoList.add(0, itemCoverInfoMaintainService.get(itemCoverKeys.get(i)));
+            }
+            for (int i = 0; i < orderedItemCoverInfoList.size(); i++) {
+                orderedItemCoverInfoList.get(i).setIndex(i);
+            }
+
+            // 8. 批量更新。
+            itemCoverInfoMaintainService.batchUpdate(orderedItemCoverInfoList);
+        } catch (FileException e) {
+            throw new ItemCoverTransportException(e);
+        } catch (HandlerException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new HandlerException(e);
+        }
+    }
+
     private void makeSureUserExists(StringIdKey userKey) throws HandlerException {
         try {
             if (!userMaintainService.exists(userKey)) {
@@ -227,6 +279,23 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
         try {
             if (Objects.isNull(itemKey) || !itemMaintainService.exists(itemKey)) {
                 throw new ItemNotExistsException(itemKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    private void makeSureItemCoverHasSameItem(List<LongIdKey> itemCoverKeys) throws HandlerException {
+        try {
+            LongIdKey parent = itemCoverInfoMaintainService.get(itemCoverKeys.get(0)).getItemKey();
+            if (Objects.isNull(parent)) {
+                throw new IllegalItemCoverStateException(itemCoverKeys.get(0));
+            }
+            for (int i = 1; i < itemCoverKeys.size(); i++) {
+                LongIdKey currKey = itemCoverInfoMaintainService.get(itemCoverKeys.get(i)).getItemKey();
+                if (!Objects.equals(parent, currKey)) {
+                    throw new IllegalItemCoverStateException(itemCoverKeys.get(i));
+                }
             }
         } catch (ServiceException e) {
             throw new HandlerException(e);

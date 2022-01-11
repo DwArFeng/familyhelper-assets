@@ -1,6 +1,7 @@
 package com.dwarfeng.familyhelper.assets.impl.service;
 
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCover;
+import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCoverOrderUpdateInfo;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCoverUploadInfo;
 import com.dwarfeng.familyhelper.assets.stack.handler.ItemCoverOperateHandler;
 import com.dwarfeng.familyhelper.assets.stack.service.ItemCoverOperateService;
@@ -48,6 +49,16 @@ public class ItemCoverOperateServiceImpl implements ItemCoverOperateService {
             itemCoverOperateHandler.removeItemCover(userKey, itemCoverKey);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("删除项目封面时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    @Override
+    public void updateItemCoverOrder(StringIdKey userKey, ItemCoverOrderUpdateInfo itemCoverOrderUpdateInfo)
+            throws ServiceException {
+        try {
+            itemCoverOperateHandler.updateItemCoverOrder(userKey, itemCoverOrderUpdateInfo);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("更新项目封面的顺序时发生异常", LogLevel.WARN, sem, e);
         }
     }
 }
