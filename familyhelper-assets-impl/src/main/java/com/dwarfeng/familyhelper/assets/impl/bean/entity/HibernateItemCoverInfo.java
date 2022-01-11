@@ -15,7 +15,7 @@ import java.util.Optional;
 })
 public class HibernateItemCoverInfo implements Bean {
 
-    private static final long serialVersionUID = 5022607864182661796L;
+    private static final long serialVersionUID = 184094459713373233L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -33,9 +33,9 @@ public class HibernateItemCoverInfo implements Bean {
     @Column(name = "column_length")
     private long length;
 
-    @Column(name = "create_date")
+    @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
+    private Date createdDate;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -107,12 +107,12 @@ public class HibernateItemCoverInfo implements Bean {
         this.length = length;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Date getModifiedDate() {
@@ -154,7 +154,7 @@ public class HibernateItemCoverInfo implements Bean {
                 "itemLongId = " + itemLongId + ", " +
                 "originName = " + originName + ", " +
                 "length = " + length + ", " +
-                "createDate = " + createDate + ", " +
+                "createdDate = " + createdDate + ", " +
                 "modifiedDate = " + modifiedDate + ", " +
                 "remark = " + remark + ", " +
                 "index = " + index + ", " +

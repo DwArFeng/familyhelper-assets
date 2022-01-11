@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class FastJsonItemFileInfo implements Bean {
 
-    private static final long serialVersionUID = 6838733502292377299L;
+    private static final long serialVersionUID = 2312309072131396748L;
 
     public static FastJsonItemFileInfo of(ItemFileInfo itemFileInfo) {
         if (Objects.isNull(itemFileInfo)) {
@@ -25,8 +25,8 @@ public class FastJsonItemFileInfo implements Bean {
             return new FastJsonItemFileInfo(
                     FastJsonLongIdKey.of(itemFileInfo.getKey()),
                     FastJsonLongIdKey.of(itemFileInfo.getItemKey()),
-                    itemFileInfo.getOriginName(), itemFileInfo.getLength(), itemFileInfo.getCreateDate(),
-                    itemFileInfo.getModifiedDate(), itemFileInfo.getRemark(), itemFileInfo.getIndex()
+                    itemFileInfo.getOriginName(), itemFileInfo.getLength(), itemFileInfo.getCreatedDate(),
+                    itemFileInfo.getModifiedDate(), itemFileInfo.getInspectedDate(), itemFileInfo.getRemark()
             );
         }
     }
@@ -43,33 +43,33 @@ public class FastJsonItemFileInfo implements Bean {
     @JSONField(name = "length", ordinal = 4)
     private long length;
 
-    @JSONField(name = "create_date", ordinal = 5)
-    private Date createDate;
+    @JSONField(name = "created_date", ordinal = 5)
+    private Date createdDate;
 
     @JSONField(name = "modified_date", ordinal = 6)
     private Date modifiedDate;
 
-    @JSONField(name = "remark", ordinal = 7)
-    private String remark;
+    @JSONField(name = "inspected_date", ordinal = 7)
+    private Date inspectedDate;
 
-    @JSONField(name = "index", ordinal = 8)
-    private int index;
+    @JSONField(name = "remark", ordinal = 8)
+    private String remark;
 
     public FastJsonItemFileInfo() {
     }
 
     public FastJsonItemFileInfo(
-            FastJsonLongIdKey key, FastJsonLongIdKey itemKey, String originName, long length, Date createDate,
-            Date modifiedDate, String remark, int index
+            FastJsonLongIdKey key, FastJsonLongIdKey itemKey, String originName, long length, Date createdDate,
+            Date modifiedDate, Date inspectedDate, String remark
     ) {
         this.key = key;
         this.itemKey = itemKey;
         this.originName = originName;
         this.length = length;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
+        this.inspectedDate = inspectedDate;
         this.remark = remark;
-        this.index = index;
     }
 
     public FastJsonLongIdKey getKey() {
@@ -104,12 +104,12 @@ public class FastJsonItemFileInfo implements Bean {
         this.length = length;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Date getModifiedDate() {
@@ -120,20 +120,20 @@ public class FastJsonItemFileInfo implements Bean {
         this.modifiedDate = modifiedDate;
     }
 
+    public Date getInspectedDate() {
+        return inspectedDate;
+    }
+
+    public void setInspectedDate(Date inspectedDate) {
+        this.inspectedDate = inspectedDate;
+    }
+
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     @Override
@@ -143,10 +143,10 @@ public class FastJsonItemFileInfo implements Bean {
                 ", itemKey=" + itemKey +
                 ", originName='" + originName + '\'' +
                 ", length=" + length +
-                ", createDate=" + createDate +
+                ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
+                ", inspectedDate=" + inspectedDate +
                 ", remark='" + remark + '\'' +
-                ", index=" + index +
                 '}';
     }
 }

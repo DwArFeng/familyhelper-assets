@@ -13,32 +13,32 @@ import java.util.Date;
  */
 public class ItemFileInfo implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -3250002253998326255L;
+    private static final long serialVersionUID = 3253053543313499974L;
 
     private LongIdKey key;
     private LongIdKey itemKey;
     private String originName;
     private long length;
-    private Date createDate;
+    private Date createdDate;
     private Date modifiedDate;
+    private Date inspectedDate;
     private String remark;
-    private int index;
 
     public ItemFileInfo() {
     }
 
     public ItemFileInfo(
-            LongIdKey key, LongIdKey itemKey, String originName, long length, Date createDate, Date modifiedDate,
-            String remark, int index
+            LongIdKey key, LongIdKey itemKey, String originName, long length, Date createdDate, Date modifiedDate,
+            Date inspectedDate, String remark
     ) {
         this.key = key;
         this.itemKey = itemKey;
         this.originName = originName;
         this.length = length;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
+        this.inspectedDate = inspectedDate;
         this.remark = remark;
-        this.index = index;
     }
 
     @Override
@@ -75,12 +75,12 @@ public class ItemFileInfo implements Entity<LongIdKey> {
         this.length = length;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Date getModifiedDate() {
@@ -91,20 +91,20 @@ public class ItemFileInfo implements Entity<LongIdKey> {
         this.modifiedDate = modifiedDate;
     }
 
+    public Date getInspectedDate() {
+        return inspectedDate;
+    }
+
+    public void setInspectedDate(Date inspectedDate) {
+        this.inspectedDate = inspectedDate;
+    }
+
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     @Override
@@ -114,10 +114,10 @@ public class ItemFileInfo implements Entity<LongIdKey> {
                 ", itemKey=" + itemKey +
                 ", originName='" + originName + '\'' +
                 ", length=" + length +
-                ", createDate=" + createDate +
+                ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
+                ", inspectedDate=" + inspectedDate +
                 ", remark='" + remark + '\'' +
-                ", index=" + index +
                 '}';
     }
 }

@@ -112,7 +112,7 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
             itemCoverInfo.setItemKey(itemKey);
             itemCoverInfo.setOriginName(itemCoverUploadInfo.getOriginName());
             itemCoverInfo.setLength(itemCoverUploadInfo.getContent().length);
-            itemCoverInfo.setCreateDate(currentDate);
+            itemCoverInfo.setCreatedDate(currentDate);
             itemCoverInfo.setModifiedDate(currentDate);
             itemCoverInfo.setRemark("通过 familyhelper-assets 服务上传/更新项目封面");
             // 查找当前 index 最大的 ItemCoverInfo 并且设置 index 为 最大的 index + 1。

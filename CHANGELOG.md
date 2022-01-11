@@ -23,6 +23,7 @@
   - com.dwarfeng.familyhelper.assets.stack.service.AssetCatalogOperateService。
   - com.dwarfeng.familyhelper.assets.stack.service.ItemOperateService。
   - com.dwarfeng.familyhelper.assets.stack.service.ItemCoverOperateService。
+  - com.dwarfeng.familyhelper.assets.stack.service.ItemFileOperateService。
 
 #### Bug修复
 

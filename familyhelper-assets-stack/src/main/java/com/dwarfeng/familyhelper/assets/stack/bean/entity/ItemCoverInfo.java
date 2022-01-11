@@ -13,13 +13,13 @@ import java.util.Date;
  */
 public class ItemCoverInfo implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -5916345803070038789L;
+    private static final long serialVersionUID = 6573841452766928025L;
 
     private LongIdKey key;
     private LongIdKey itemKey;
     private String originName;
     private long length;
-    private Date createDate;
+    private Date createdDate;
     private Date modifiedDate;
     private String remark;
     private int index;
@@ -28,14 +28,14 @@ public class ItemCoverInfo implements Entity<LongIdKey> {
     }
 
     public ItemCoverInfo(
-            LongIdKey key, LongIdKey itemKey, String originName, long length, Date createDate, Date modifiedDate,
+            LongIdKey key, LongIdKey itemKey, String originName, long length, Date createdDate, Date modifiedDate,
             String remark, int index
     ) {
         this.key = key;
         this.itemKey = itemKey;
         this.originName = originName;
         this.length = length;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.remark = remark;
         this.index = index;
@@ -75,12 +75,12 @@ public class ItemCoverInfo implements Entity<LongIdKey> {
         this.length = length;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Date getModifiedDate() {
@@ -114,7 +114,7 @@ public class ItemCoverInfo implements Entity<LongIdKey> {
                 ", itemKey=" + itemKey +
                 ", originName='" + originName + '\'' +
                 ", length=" + length +
-                ", createDate=" + createDate +
+                ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
                 ", remark='" + remark + '\'' +
                 ", index=" + index +

@@ -9,6 +9,7 @@ package com.dwarfeng.familyhelper.assets.impl.util;
 public final class FtpConstants {
 
     public static final String PATH_ITEM_COVER = "familyhelper-assets/item-cover";
+    public static final String PATH_ITEM_FILE = "familyhelper-assets/item-file";
 
     private FtpConstants() {
         throw new IllegalStateException("禁止实例化");

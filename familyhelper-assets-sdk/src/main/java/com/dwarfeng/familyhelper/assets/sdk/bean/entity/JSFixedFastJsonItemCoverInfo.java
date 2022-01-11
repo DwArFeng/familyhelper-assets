@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonItemCoverInfo implements Bean {
 
-    private static final long serialVersionUID = 946452725972512631L;
+    private static final long serialVersionUID = 2744287835829190564L;
 
     public static JSFixedFastJsonItemCoverInfo of(ItemCoverInfo itemCoverInfo) {
         if (Objects.isNull(itemCoverInfo)) {
@@ -26,7 +26,7 @@ public class JSFixedFastJsonItemCoverInfo implements Bean {
             return new JSFixedFastJsonItemCoverInfo(
                     JSFixedFastJsonLongIdKey.of(itemCoverInfo.getKey()),
                     JSFixedFastJsonLongIdKey.of(itemCoverInfo.getItemKey()),
-                    itemCoverInfo.getOriginName(), itemCoverInfo.getLength(), itemCoverInfo.getCreateDate(),
+                    itemCoverInfo.getOriginName(), itemCoverInfo.getLength(), itemCoverInfo.getCreatedDate(),
                     itemCoverInfo.getModifiedDate(), itemCoverInfo.getRemark(), itemCoverInfo.getIndex()
             );
         }
@@ -44,8 +44,8 @@ public class JSFixedFastJsonItemCoverInfo implements Bean {
     @JSONField(name = "length", ordinal = 4, serializeUsing = ToStringSerializer.class)
     private long length;
 
-    @JSONField(name = "create_date", ordinal = 5)
-    private Date createDate;
+    @JSONField(name = "created_date", ordinal = 5)
+    private Date createdDate;
 
     @JSONField(name = "modified_date", ordinal = 6)
     private Date modifiedDate;
@@ -61,13 +61,13 @@ public class JSFixedFastJsonItemCoverInfo implements Bean {
 
     public JSFixedFastJsonItemCoverInfo(
             JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey itemKey, String originName, long length,
-            Date createDate, Date modifiedDate, String remark, int index
+            Date createdDate, Date modifiedDate, String remark, int index
     ) {
         this.key = key;
         this.itemKey = itemKey;
         this.originName = originName;
         this.length = length;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.remark = remark;
         this.index = index;
@@ -105,12 +105,12 @@ public class JSFixedFastJsonItemCoverInfo implements Bean {
         this.length = length;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Date getModifiedDate() {
@@ -144,7 +144,7 @@ public class JSFixedFastJsonItemCoverInfo implements Bean {
                 ", itemKey=" + itemKey +
                 ", originName='" + originName + '\'' +
                 ", length=" + length +
-                ", createDate=" + createDate +
+                ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
                 ", remark='" + remark + '\'' +
                 ", index=" + index +

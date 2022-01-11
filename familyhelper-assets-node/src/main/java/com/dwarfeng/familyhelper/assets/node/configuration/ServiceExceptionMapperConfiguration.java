@@ -26,6 +26,9 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(ItemCoverNotExistsException.class, ServiceExceptionCodes.ITEM_COVER_NOT_EXISTS);
         destination.put(ItemCoverTransportException.class, ServiceExceptionCodes.ITEM_COVER_TRANSPORT_FAILED);
         destination.put(IllegalItemCoverStateException.class, ServiceExceptionCodes.ILLEGAL_ITEM_COVER_STATE);
+        destination.put(ItemFileNotExistsException.class, ServiceExceptionCodes.ITEM_FILE_NOT_EXISTS);
+        destination.put(ItemFileTransportException.class, ServiceExceptionCodes.ITEM_FILE_TRANSPORT_FAILED);
+        destination.put(IllegalItemFileStateException.class, ServiceExceptionCodes.ILLEGAL_ITEM_FILE_STATE);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
     }
 }

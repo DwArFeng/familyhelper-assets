@@ -38,7 +38,7 @@ public class ItemFileInfoMaintainServiceImplTest {
         itemFileInfos = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             ItemFileInfo itemFileInfo = new ItemFileInfo(
-                    null, null, "originName", 12450, new Date(), new Date(), "remark", 1
+                    null, null, "originName", 12450, new Date(), new Date(), new Date(), "remark"
             );
             itemFileInfos.add(itemFileInfo);
         }

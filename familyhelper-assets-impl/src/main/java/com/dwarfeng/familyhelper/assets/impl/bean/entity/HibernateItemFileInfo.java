@@ -11,11 +11,13 @@ import java.util.Optional;
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_item_file_info", indexes = {
-        @Index(name = "idx_column_index", columnList = "item_id, column_index")
+        @Index(name = "idx_created_date", columnList = "item_id, created_date"),
+        @Index(name = "idx_modified_date", columnList = "item_id, modified_date"),
+        @Index(name = "idx_inspected_date", columnList = "item_id, inspected_date")
 })
 public class HibernateItemFileInfo implements Bean {
 
-    private static final long serialVersionUID = -211484269661064432L;
+    private static final long serialVersionUID = -1834171511680446619L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -33,19 +35,20 @@ public class HibernateItemFileInfo implements Bean {
     @Column(name = "column_length")
     private long length;
 
-    @Column(name = "create_date")
+    @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
+    private Date createdDate;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
 
+    @Column(name = "inspected_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date inspectedDate;
+
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
-
-    @Column(name = "column_index", nullable = false)
-    private int index;
 
     // -----------------------------------------------------------多对一-----------------------------------------------------------
     @ManyToOne(targetEntity = HibernateItem.class)
@@ -107,12 +110,12 @@ public class HibernateItemFileInfo implements Bean {
         this.length = length;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Date getModifiedDate() {
@@ -123,20 +126,20 @@ public class HibernateItemFileInfo implements Bean {
         this.modifiedDate = modifiedDate;
     }
 
+    public Date getInspectedDate() {
+        return inspectedDate;
+    }
+
+    public void setInspectedDate(Date inspectedDate) {
+        this.inspectedDate = inspectedDate;
+    }
+
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     public HibernateItem getItem() {
@@ -154,10 +157,10 @@ public class HibernateItemFileInfo implements Bean {
                 "itemLongId = " + itemLongId + ", " +
                 "originName = " + originName + ", " +
                 "length = " + length + ", " +
-                "createDate = " + createDate + ", " +
+                "createdDate = " + createdDate + ", " +
                 "modifiedDate = " + modifiedDate + ", " +
+                "inspectedDate = " + inspectedDate + ", " +
                 "remark = " + remark + ", " +
-                "index = " + index + ", " +
                 "item = " + item + ")";
     }
 }
