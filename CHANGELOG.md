@@ -22,6 +22,7 @@
 - 完成实体的操作服务。
   - com.dwarfeng.familyhelper.assets.stack.service.AssetCatalogOperateService。
   - com.dwarfeng.familyhelper.assets.stack.service.ItemOperateService。
+  - com.dwarfeng.familyhelper.assets.stack.service.ItemCoverOperateService。
 
 #### Bug修复
 

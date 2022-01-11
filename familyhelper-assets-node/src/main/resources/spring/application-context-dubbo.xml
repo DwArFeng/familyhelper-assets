@@ -41,6 +41,8 @@
                    ref="userMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.assets.stack.service.ItemCoverInfoMaintainService"
                    ref="itemCoverInfoMaintainServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.familyhelper.assets.stack.service.ItemCoverOperateService"
+                   ref="itemCoverOperateServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.assets.stack.service.ItemFileInfoMaintainService"
                    ref="itemFileInfoMaintainServiceImpl"/>
 

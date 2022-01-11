@@ -3,6 +3,7 @@ package com.dwarfeng.familyhelper.assets.impl.handler;
 import com.dwarfeng.familyhelper.assets.sdk.util.Constants;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCreateInfo;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemUpdateInfo;
+import com.dwarfeng.familyhelper.assets.stack.bean.entity.AssetCatalog;
 import com.dwarfeng.familyhelper.assets.stack.bean.entity.Item;
 import com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemLabel;
 import com.dwarfeng.familyhelper.assets.stack.bean.entity.Poac;
@@ -87,6 +88,11 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
             // 7. 关联 项目标签 实体。
             itemMaintainService.batchAddLabelRelations(itemKey, labelKeys);
 
+            // 8. 资产目录对应项目数量增加。
+            AssetCatalog assetCatalog = assetCatalogMaintainService.get(assetCatalogKey);
+            assetCatalog.setItemCount(assetCatalog.getItemCount() + 1);
+            assetCatalogMaintainService.update(assetCatalog);
+
             // 8. 返回 项目 实体的主键。
             return itemKey;
         } catch (HandlerException e) {
@@ -167,7 +173,13 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
             // 3. 确认用户有权限操作指定的银行卡。
             makeSureUserPermittedForItem(userKey, itemKey);
 
-            // 4. 存在删除指定的项目。
+            // 4. 资产目录对应项目数量减少。
+            Item item = itemMaintainService.get(itemKey);
+            AssetCatalog assetCatalog = assetCatalogMaintainService.get(item.getAssetCatalogKey());
+            assetCatalog.setItemCount(assetCatalog.getItemCount() + 1);
+            assetCatalogMaintainService.update(assetCatalog);
+
+            // 5. 存在删除指定的项目。
             itemMaintainService.deleteIfExists(itemKey);
         } catch (HandlerException e) {
             throw e;
@@ -237,6 +249,7 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void makeSureUserPermittedForAssetCatalog(StringIdKey userKey, LongIdKey assetCatalogKey)
             throws HandlerException {
         try {

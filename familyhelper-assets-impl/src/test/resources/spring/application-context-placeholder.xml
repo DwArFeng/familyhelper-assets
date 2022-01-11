@@ -11,11 +11,8 @@
 
     <!-- 设置配置文件的路径 -->
     <context:property-placeholder
-            location=
-                    "classpath:database/*.properties,
-                    classpath:dubbo/*.properties,
-                    classpath:familyhelper/*.properties,
-                    classpath:redis/*.properties"
+            location="classpath:database/*.properties,classpath:dubbo/*.properties,classpath:familyhelper/*.properties,
+            classpath:redis/*.properties,classpath:ftp/*.properties"
             local-override="true"
             properties-ref="refProperties"/>
 
@@ -31,6 +28,8 @@
                 <value>file:conf/test.redis/*.properties</value>
                 <!--suppress SpringXmlModelInspection -->
                 <value>file:conf/test.familyhelper/*.properties</value>
+                <!--suppress SpringXmlModelInspection -->
+                <value>file:conf/test.ftp/*.properties</value>
             </list>
         </property>
     </bean>

@@ -26,6 +26,10 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(50), "illegal item state");
     public static final ServiceException.Code ITEM_LABEL_NOT_EXISTS =
             new ServiceException.Code(offset(60), "item label not exists");
+    public static final ServiceException.Code ITEM_COVER_NOT_EXISTS =
+            new ServiceException.Code(offset(70), "item cover not exists");
+    public static final ServiceException.Code ITEM_COVER_TRANSPORT_FAILED =
+            new ServiceException.Code(offset(80), "item cover transport failed");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -57,6 +61,8 @@ public final class ServiceExceptionCodes {
         ITEM_NOT_EXISTS.setCode(offset(40));
         ILLEGAL_ITEM_STATE.setCode(offset(50));
         ITEM_LABEL_NOT_EXISTS.setCode(offset(60));
+        ITEM_COVER_NOT_EXISTS.setCode(offset(70));
+        ITEM_COVER_TRANSPORT_FAILED.setCode(offset(80));
     }
 
     private ServiceExceptionCodes() {
