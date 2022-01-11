@@ -176,7 +176,7 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
             // 4. 资产目录对应项目数量减少。
             Item item = itemMaintainService.get(itemKey);
             AssetCatalog assetCatalog = assetCatalogMaintainService.get(item.getAssetCatalogKey());
-            assetCatalog.setItemCount(assetCatalog.getItemCount() + 1);
+            assetCatalog.setItemCount(assetCatalog.getItemCount() - 1);
             assetCatalogMaintainService.update(assetCatalog);
 
             // 5. 存在删除指定的项目。
