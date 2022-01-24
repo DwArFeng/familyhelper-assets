@@ -25,6 +25,8 @@
   - com.dwarfeng.familyhelper.assets.stack.service.ItemCoverOperateService。
   - com.dwarfeng.familyhelper.assets.stack.service.ItemFileOperateService。
 
+- 为 `dubbo` 增加超时时间的配置选项。
+
 #### Bug修复
 
 - (无)
