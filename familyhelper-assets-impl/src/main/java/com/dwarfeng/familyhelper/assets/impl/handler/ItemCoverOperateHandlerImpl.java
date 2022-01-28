@@ -1,6 +1,5 @@
 package com.dwarfeng.familyhelper.assets.impl.handler;
 
-import com.dwarfeng.familyhelper.assets.impl.exception.FileException;
 import com.dwarfeng.familyhelper.assets.impl.util.FtpConstants;
 import com.dwarfeng.familyhelper.assets.sdk.util.Constants;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCover;
@@ -16,6 +15,7 @@ import com.dwarfeng.familyhelper.assets.stack.service.ItemCoverInfoMaintainServi
 import com.dwarfeng.familyhelper.assets.stack.service.ItemMaintainService;
 import com.dwarfeng.familyhelper.assets.stack.service.PoacMaintainService;
 import com.dwarfeng.familyhelper.assets.stack.service.UserMaintainService;
+import com.dwarfeng.ftp.handler.FtpHandler;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -75,8 +75,6 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
 
             // 5. 拼接 ItemCover 并返回。
             return new ItemCover(itemCoverInfo.getOriginName(), content);
-        } catch (FileException e) {
-            throw new ItemCoverTransportException(e);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {
@@ -121,8 +119,6 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
             ).getData().stream().findFirst().map(i -> i.getIndex() + 1).orElse(0);
             itemCoverInfo.setIndex(index);
             itemCoverInfoMaintainService.insertOrUpdate(itemCoverInfo);
-        } catch (FileException e) {
-            throw new ItemCoverTransportException(e);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {
@@ -150,8 +146,6 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
 
             // 5. 如果存在 ItemCoverInfo 实体，则删除。
             itemCoverInfoMaintainService.deleteIfExists(itemCoverKey);
-        } catch (FileException e) {
-            throw new ItemCoverTransportException(e);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {
@@ -204,8 +198,6 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
 
             // 8. 批量更新。
             itemCoverInfoMaintainService.batchUpdate(orderedItemCoverInfoList);
-        } catch (FileException e) {
-            throw new ItemCoverTransportException(e);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {

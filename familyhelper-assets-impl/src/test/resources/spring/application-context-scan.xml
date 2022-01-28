@@ -21,4 +21,6 @@
     <context:component-scan base-package="com.dwarfeng.familyhelper.assets.impl.configuration"/>
     <!--扫描aop增强所在的包。 -->
     <context:component-scan base-package="com.dwarfeng.subgrade.sdk.interceptor.analyse"/>
+    <!--扫描dwarfeng-ftp的包。 -->
+    <context:component-scan base-package="com.dwarfeng.ftp.handler"/>
 </beans>

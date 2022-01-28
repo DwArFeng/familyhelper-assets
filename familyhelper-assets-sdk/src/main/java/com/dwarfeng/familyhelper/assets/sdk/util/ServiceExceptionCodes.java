@@ -28,14 +28,10 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(60), "item label not exists");
     public static final ServiceException.Code ITEM_COVER_NOT_EXISTS =
             new ServiceException.Code(offset(70), "item cover not exists");
-    public static final ServiceException.Code ITEM_COVER_TRANSPORT_FAILED =
-            new ServiceException.Code(offset(80), "item cover transport failed");
     public static final ServiceException.Code ILLEGAL_ITEM_COVER_STATE =
             new ServiceException.Code(offset(90), "illegal item cover state");
     public static final ServiceException.Code ITEM_FILE_NOT_EXISTS =
             new ServiceException.Code(offset(100), "item file not exists");
-    public static final ServiceException.Code ITEM_FILE_TRANSPORT_FAILED =
-            new ServiceException.Code(offset(110), "item file transport failed");
     public static final ServiceException.Code ILLEGAL_ITEM_FILE_STATE =
             new ServiceException.Code(offset(120), "illegal item file state");
 
@@ -70,10 +66,8 @@ public final class ServiceExceptionCodes {
         ILLEGAL_ITEM_STATE.setCode(offset(50));
         ITEM_LABEL_NOT_EXISTS.setCode(offset(60));
         ITEM_COVER_NOT_EXISTS.setCode(offset(70));
-        ITEM_COVER_TRANSPORT_FAILED.setCode(offset(80));
         ILLEGAL_ITEM_COVER_STATE.setCode(offset(90));
         ITEM_FILE_NOT_EXISTS.setCode(offset(100));
-        ITEM_FILE_TRANSPORT_FAILED.setCode(offset(110));
         ILLEGAL_ITEM_FILE_STATE.setCode(offset(120));
     }
 

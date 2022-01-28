@@ -1,6 +1,5 @@
 package com.dwarfeng.familyhelper.assets.impl.handler;
 
-import com.dwarfeng.familyhelper.assets.impl.exception.FileException;
 import com.dwarfeng.familyhelper.assets.impl.util.FtpConstants;
 import com.dwarfeng.familyhelper.assets.sdk.util.Constants;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemFile;
@@ -16,6 +15,7 @@ import com.dwarfeng.familyhelper.assets.stack.service.ItemFileInfoMaintainServic
 import com.dwarfeng.familyhelper.assets.stack.service.ItemMaintainService;
 import com.dwarfeng.familyhelper.assets.stack.service.PoacMaintainService;
 import com.dwarfeng.familyhelper.assets.stack.service.UserMaintainService;
+import com.dwarfeng.ftp.handler.FtpHandler;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -77,8 +77,6 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
 
             // 6. 拼接 ItemFile 并返回。
             return new ItemFile(itemFileInfo.getOriginName(), content);
-        } catch (FileException e) {
-            throw new ItemFileTransportException(e);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {
@@ -119,8 +117,6 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
             itemFileInfo.setInspectedDate(currentDate);
             itemFileInfo.setRemark("通过 familyhelper-assets 服务上传/更新项目文件");
             itemFileInfoMaintainService.insertOrUpdate(itemFileInfo);
-        } catch (FileException e) {
-            throw new ItemFileTransportException(e);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {
@@ -150,8 +146,6 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
             ItemFileInfo itemFileInfo = itemFileInfoMaintainService.get(itemFileKey);
             itemFileInfo.setModifiedDate(new Date());
             itemFileInfoMaintainService.update(itemFileInfo);
-        } catch (FileException e) {
-            throw new ItemFileTransportException(e);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {
@@ -179,8 +173,6 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
 
             // 5. 如果存在 ItemFileInfo 实体，则删除。
             itemFileInfoMaintainService.deleteIfExists(itemFileKey);
-        } catch (FileException e) {
-            throw new ItemFileTransportException(e);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {

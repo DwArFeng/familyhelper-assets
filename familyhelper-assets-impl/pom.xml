@@ -151,6 +151,11 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-impl</artifactId>
         </dependency>
+        <!-- dwarfeng-ftp组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dwarfeng-ftp</artifactId>
+        </dependency>
         <!-- spring-terminator组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>

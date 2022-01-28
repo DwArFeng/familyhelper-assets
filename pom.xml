@@ -54,6 +54,7 @@
         <dutil.version>beta-0.2.1.a</dutil.version>
         <snowflake.version>1.2.4.a</snowflake.version>
         <subgrade.version>1.2.2.a</subgrade.version>
+        <dwarfeng-ftp.version>1.0.0.a</dwarfeng-ftp.version>
         <spring-terminator.version>1.0.7.a</spring-terminator.version>
         <spring-telqos.version>1.1.1.a</spring-telqos.version>
         <!-- Maven插件版本声明 -->
@@ -381,6 +382,12 @@
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>subgrade-impl</artifactId>
                 <version>${subgrade.version}</version>
+            </dependency>
+            <!-- dwarfeng-ftp组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>dwarfeng-ftp</artifactId>
+                <version>${dwarfeng-ftp.version}</version>
             </dependency>
             <!-- spring-terminator组件 -->
             <dependency>
