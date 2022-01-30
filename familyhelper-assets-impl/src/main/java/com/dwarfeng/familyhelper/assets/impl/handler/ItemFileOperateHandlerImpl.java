@@ -144,6 +144,8 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
 
             // 5. 根据 itemFileUpdateInfo 更新字段。
             ItemFileInfo itemFileInfo = itemFileInfoMaintainService.get(itemFileKey);
+            itemFileInfo.setOriginName(itemFileUpdateInfo.getOriginName());
+            itemFileInfo.setLength(content.length);
             itemFileInfo.setModifiedDate(new Date());
             itemFileInfoMaintainService.update(itemFileInfo);
         } catch (HandlerException e) {
