@@ -1,4 +1,4 @@
-package com.dwarfeng.familyhelper.assets.impl.dao;
+package com.dwarfeng.familyhelper.assets.impl.service;
 
 import com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemTypeIndicator;
 import com.dwarfeng.familyhelper.assets.stack.service.ItemTypeIndicatorMaintainService;

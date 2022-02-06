@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复 ItemTypeIndicatorMaintainService 实现类的错误路径。
 
 #### 功能移除
 
