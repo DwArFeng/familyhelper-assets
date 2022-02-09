@@ -5,7 +5,6 @@ import com.dwarfeng.familyhelper.assets.stack.bean.entity.Item;
 import com.dwarfeng.familyhelper.assets.stack.bean.entity.Poac;
 import com.dwarfeng.familyhelper.assets.stack.bean.key.PoacKey;
 import com.dwarfeng.familyhelper.assets.stack.cache.AssetCatalogCache;
-import com.dwarfeng.familyhelper.assets.stack.cache.ItemCache;
 import com.dwarfeng.familyhelper.assets.stack.cache.PoacCache;
 import com.dwarfeng.familyhelper.assets.stack.dao.AssetCatalogDao;
 import com.dwarfeng.familyhelper.assets.stack.dao.ItemDao;
@@ -26,26 +25,28 @@ import java.util.stream.Collectors;
 public class AssetCatalogCrudOperation implements BatchCrudOperation<LongIdKey, AssetCatalog> {
 
     private final AssetCatalogDao assetCatalogDao;
-    private final ItemDao itemDao;
-    private final PoacDao poacDao;
-
     private final AssetCatalogCache assetCatalogCache;
-    private final ItemCache itemCache;
+
+    private final PoacDao poacDao;
     private final PoacCache poacCache;
+
+    private final ItemDao itemDao;
+    private final ItemCrudOperation itemCrudOperation;
 
     @Value("${cache.timeout.entity.asset_catalog}")
     private long assetCatalogTimeout;
 
     public AssetCatalogCrudOperation(
-            AssetCatalogDao assetCatalogDao, ItemDao itemDao, PoacDao poacDao,
-            AssetCatalogCache assetCatalogCache, ItemCache itemCache, PoacCache poacCache
+            AssetCatalogDao assetCatalogDao, AssetCatalogCache assetCatalogCache,
+            PoacDao poacDao, PoacCache poacCache,
+            ItemDao itemDao, ItemCrudOperation itemCrudOperation
     ) {
         this.assetCatalogDao = assetCatalogDao;
-        this.itemDao = itemDao;
-        this.poacDao = poacDao;
         this.assetCatalogCache = assetCatalogCache;
-        this.itemCache = itemCache;
+        this.poacDao = poacDao;
         this.poacCache = poacCache;
+        this.itemDao = itemDao;
+        this.itemCrudOperation = itemCrudOperation;
     }
 
     @Override
@@ -85,9 +86,7 @@ public class AssetCatalogCrudOperation implements BatchCrudOperation<LongIdKey, 
         List<LongIdKey> itemKeys = itemDao.lookup(
                 ItemMaintainService.CHILD_FOR_ASSET_CATALOG, new Object[]{key}
         ).stream().map(Item::getKey).collect(Collectors.toList());
-        // 删除与账本相关的银行卡。
-        itemCache.batchDelete(itemKeys);
-        itemDao.batchDelete(itemKeys);
+        itemCrudOperation.batchDelete(itemKeys);
 
         // 删除与账本相关的账本权限。
         List<PoacKey> poacKeys = poacDao.lookup(PoacMaintainService.CHILD_FOR_ASSET_CATALOG, new Object[]{key})
