@@ -21,14 +21,13 @@ import java.util.stream.Collectors;
  */
 public class WebInputItemUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = -3229574897698035100L;
+    private static final long serialVersionUID = -1163759600490318660L;
 
     public static ItemUpdateInfo toStackBean(WebInputItemUpdateInfo webInputItemUpdateInfo) {
         if (Objects.isNull(webInputItemUpdateInfo)) {
             return null;
         } else {
             return new ItemUpdateInfo(
-                    WebInputLongIdKey.toStackBean(webInputItemUpdateInfo.getAssetCatalogKey()),
                     WebInputLongIdKey.toStackBean(webInputItemUpdateInfo.getItemKey()),
                     WebInputLongIdKey.toStackBean(webInputItemUpdateInfo.getParentKey()),
                     webInputItemUpdateInfo.getLabelKeys().stream().map(WebInputStringIdKey::toStackBean)
@@ -40,11 +39,6 @@ public class WebInputItemUpdateInfo implements Dto {
             );
         }
     }
-
-    @JSONField(name = "asset_catalog_key")
-    @Valid
-    @NotNull
-    private WebInputLongIdKey assetCatalogKey;
 
     @JSONField(name = "item_key")
     @Valid
@@ -74,14 +68,6 @@ public class WebInputItemUpdateInfo implements Dto {
     private String remark;
 
     public WebInputItemUpdateInfo() {
-    }
-
-    public WebInputLongIdKey getAssetCatalogKey() {
-        return assetCatalogKey;
-    }
-
-    public void setAssetCatalogKey(WebInputLongIdKey assetCatalogKey) {
-        this.assetCatalogKey = assetCatalogKey;
     }
 
     public WebInputLongIdKey getItemKey() {
@@ -143,8 +129,7 @@ public class WebInputItemUpdateInfo implements Dto {
     @Override
     public String toString() {
         return "WebInputItemUpdateInfo{" +
-                "assetCatalogKey=" + assetCatalogKey +
-                ", itemKey=" + itemKey +
+                "itemKey=" + itemKey +
                 ", parentKey=" + parentKey +
                 ", labelKeys=" + labelKeys +
                 ", name='" + name + '\'' +

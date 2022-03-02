@@ -14,9 +14,8 @@ import java.util.List;
  */
 public class ItemUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 5483972812959308785L;
+    private static final long serialVersionUID = -4093987943528315007L;
 
-    private LongIdKey assetCatalogKey;
     private LongIdKey itemKey;
     private LongIdKey parentKey;
     private List<StringIdKey> labelKeys;
@@ -29,10 +28,9 @@ public class ItemUpdateInfo implements Dto {
     }
 
     public ItemUpdateInfo(
-            LongIdKey assetCatalogKey, LongIdKey itemKey, LongIdKey parentKey, List<StringIdKey> labelKeys,
+            LongIdKey itemKey, LongIdKey parentKey, List<StringIdKey> labelKeys,
             String name, String type, Integer lifeCycle, String remark
     ) {
-        this.assetCatalogKey = assetCatalogKey;
         this.itemKey = itemKey;
         this.parentKey = parentKey;
         this.labelKeys = labelKeys;
@@ -40,14 +38,6 @@ public class ItemUpdateInfo implements Dto {
         this.type = type;
         this.lifeCycle = lifeCycle;
         this.remark = remark;
-    }
-
-    public LongIdKey getAssetCatalogKey() {
-        return assetCatalogKey;
-    }
-
-    public void setAssetCatalogKey(LongIdKey assetCatalogKey) {
-        this.assetCatalogKey = assetCatalogKey;
     }
 
     public LongIdKey getItemKey() {
@@ -109,8 +99,7 @@ public class ItemUpdateInfo implements Dto {
     @Override
     public String toString() {
         return "ItemUpdateInfo{" +
-                "assetCatalogKey=" + assetCatalogKey +
-                ", itemKey=" + itemKey +
+                "itemKey=" + itemKey +
                 ", parentKey=" + parentKey +
                 ", labelKeys=" + labelKeys +
                 ", name='" + name + '\'' +

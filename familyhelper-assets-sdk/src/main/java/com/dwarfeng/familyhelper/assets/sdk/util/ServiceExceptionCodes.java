@@ -34,6 +34,8 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(100), "item file not exists");
     public static final ServiceException.Code ILLEGAL_ITEM_FILE_STATE =
             new ServiceException.Code(offset(120), "illegal item file state");
+    public static final ServiceException.Code ASSET_CATALOG_NOT_IDENTICAL =
+            new ServiceException.Code(offset(130), "asset catalog not identical");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -69,6 +71,7 @@ public final class ServiceExceptionCodes {
         ILLEGAL_ITEM_COVER_STATE.setCode(offset(90));
         ITEM_FILE_NOT_EXISTS.setCode(offset(100));
         ILLEGAL_ITEM_FILE_STATE.setCode(offset(120));
+        ASSET_CATALOG_NOT_IDENTICAL.setCode(offset(130));
     }
 
     private ServiceExceptionCodes() {
