@@ -1,72 +1,57 @@
 package com.dwarfeng.familyhelper.assets.impl.handler;
 
 import com.dwarfeng.familyhelper.assets.impl.util.FtpConstants;
-import com.dwarfeng.familyhelper.assets.sdk.util.Constants;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCover;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCoverOrderUpdateInfo;
 import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemCoverUploadInfo;
-import com.dwarfeng.familyhelper.assets.stack.bean.entity.Item;
 import com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemCoverInfo;
-import com.dwarfeng.familyhelper.assets.stack.bean.entity.Poac;
-import com.dwarfeng.familyhelper.assets.stack.bean.key.PoacKey;
-import com.dwarfeng.familyhelper.assets.stack.exception.*;
 import com.dwarfeng.familyhelper.assets.stack.handler.ItemCoverOperateHandler;
 import com.dwarfeng.familyhelper.assets.stack.service.ItemCoverInfoMaintainService;
-import com.dwarfeng.familyhelper.assets.stack.service.ItemMaintainService;
-import com.dwarfeng.familyhelper.assets.stack.service.PoacMaintainService;
-import com.dwarfeng.familyhelper.assets.stack.service.UserMaintainService;
 import com.dwarfeng.ftp.handler.FtpHandler;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
 
-    private final UserMaintainService userMaintainService;
     private final ItemCoverInfoMaintainService itemCoverInfoMaintainService;
-    private final ItemMaintainService itemMaintainService;
-    private final PoacMaintainService poacMaintainService;
     private final FtpHandler ftpHandler;
 
     private final KeyFetcher<LongIdKey> keyFetcher;
 
+    private final OperateHandlerValidator operateHandlerValidator;
+
     public ItemCoverOperateHandlerImpl(
-            UserMaintainService userMaintainService,
             ItemCoverInfoMaintainService itemCoverInfoMaintainService,
-            ItemMaintainService itemMaintainService,
-            PoacMaintainService poacMaintainService,
             FtpHandler ftpHandler,
-            KeyFetcher<LongIdKey> keyFetcher
+            KeyFetcher<LongIdKey> keyFetcher,
+            OperateHandlerValidator operateHandlerValidator
     ) {
-        this.userMaintainService = userMaintainService;
         this.itemCoverInfoMaintainService = itemCoverInfoMaintainService;
-        this.itemMaintainService = itemMaintainService;
-        this.poacMaintainService = poacMaintainService;
         this.ftpHandler = ftpHandler;
         this.keyFetcher = keyFetcher;
+        this.operateHandlerValidator = operateHandlerValidator;
     }
 
     @Override
     public ItemCover downloadItemCover(StringIdKey userKey, LongIdKey itemCoverKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认项目封面存在。
-            makeSureItemCoverExists(itemCoverKey);
+            operateHandlerValidator.makeSureItemCoverExists(itemCoverKey);
 
             // 3. 获取项目封面对应的项目，并确认用户有权限操作项目。
             ItemCoverInfo itemCoverInfo = itemCoverInfoMaintainService.get(itemCoverKey);
-            makeSureUserPermittedForItem(userKey, itemCoverInfo.getItemKey());
+            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemCoverInfo.getItemKey());
 
             // 4. 下载项目封面。
             byte[] content = ftpHandler.getFileContent(
@@ -86,14 +71,14 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
     public void uploadItemCover(StringIdKey userKey, ItemCoverUploadInfo itemCoverUploadInfo) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认项目封面所属的项目存在。
             LongIdKey itemKey = itemCoverUploadInfo.getItemKey();
-            makeSureItemExists(itemKey);
+            operateHandlerValidator.makeSureItemExists(itemKey);
 
             // 3. 确认用户有权限操作项目。
-            makeSureUserPermittedForItem(userKey, itemKey);
+            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemKey);
 
             // 4. 分配主键。
             LongIdKey itemCoverKey = keyFetcher.fetchKey();
@@ -130,14 +115,14 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
     public void removeItemCover(StringIdKey userKey, LongIdKey itemCoverKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 2. 确认项目封面存在。
-            makeSureItemCoverExists(itemCoverKey);
+            operateHandlerValidator.makeSureItemCoverExists(itemCoverKey);
 
             // 3. 获取项目封面对应的项目，并确认用户有权限操作项目。
             ItemCoverInfo itemCoverInfo = itemCoverInfoMaintainService.get(itemCoverKey);
-            makeSureUserPermittedForItem(userKey, itemCoverInfo.getItemKey());
+            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemCoverInfo.getItemKey());
 
             // 4. 如果存在 ItemCover 文件，则删除。
             if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_ITEM_COVER}, getFileName(itemCoverKey))) {
@@ -169,15 +154,15 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
             }
 
             // 2. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 3. 确认项目封面存在。
             for (LongIdKey itemCoverKey : itemCoverKeys) {
-                makeSureItemCoverExists(itemCoverKey);
+                operateHandlerValidator.makeSureItemCoverExists(itemCoverKey);
             }
 
             // 4. 确认项目封面属于同一个项目，且项目不为空。
-            makeSureItemCoverHasSameItem(itemCoverKeys);
+            operateHandlerValidator.makeSureItemCoverHasSameItem(itemCoverKeys);
 
             // 5. 获取项目封面所属的项目。
             LongIdKey itemKey = itemCoverInfoMaintainService.get(itemCoverKeys.get(0)).getItemKey();
@@ -205,92 +190,4 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
         }
     }
 
-    private void makeSureUserExists(StringIdKey userKey) throws HandlerException {
-        try {
-            if (!userMaintainService.exists(userKey)) {
-                throw new UserNotExistsException(userKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    private void makeSureItemCoverExists(LongIdKey itemCoverKey) throws HandlerException {
-        try {
-            if (!itemCoverInfoMaintainService.exists(itemCoverKey)) {
-                throw new ItemCoverNotExistsException(itemCoverKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    private void makeSureUserPermittedForItem(StringIdKey userKey, LongIdKey itemKey) throws HandlerException {
-        try {
-            // 1. 查找指定的银行卡是否绑定账本，如果不绑定账本，则抛出银行卡状态异常。
-            Item item = itemMaintainService.get(itemKey);
-            if (Objects.isNull(item.getAssetCatalogKey())) {
-                throw new IllegalItemStateException(itemKey);
-            }
-
-            // 2. 取出银行卡的账本外键，判断用户是否拥有该账本的权限。
-            makeSureUserPermittedForAssetCatalog(userKey, item.getAssetCatalogKey());
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    @SuppressWarnings("DuplicatedCode")
-    private void makeSureUserPermittedForAssetCatalog(StringIdKey userKey, LongIdKey assetCatalogKey)
-            throws HandlerException {
-        try {
-            // 1. 构造 Poac 主键。
-            PoacKey poacKey = new PoacKey(assetCatalogKey.getLongId(), userKey.getStringId());
-
-            // 2. 查看 Poac 实体是否存在，如果不存在，则没有权限。
-            if (!poacMaintainService.exists(poacKey)) {
-                throw new UserNotPermittedException(userKey, assetCatalogKey);
-            }
-
-            // 3. 查看 Poac.permissionLevel 是否为 Poac.PERMISSION_LEVEL_OWNER 或 Poac.PERMISSION_LEVEL_MODIFIER，
-            // 如果不是，则没有权限。
-            Poac poac = poacMaintainService.get(poacKey);
-            if (Objects.equals(poac.getPermissionLevel(), Constants.PERMISSION_LEVEL_OWNER)) {
-                return;
-            }
-            if (Objects.equals(poac.getPermissionLevel(), Constants.PERMISSION_LEVEL_MODIFIER)) {
-                return;
-            }
-            throw new UserNotPermittedException(userKey, assetCatalogKey);
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    private void makeSureItemExists(LongIdKey itemKey) throws HandlerException {
-        try {
-            if (Objects.isNull(itemKey) || !itemMaintainService.exists(itemKey)) {
-                throw new ItemNotExistsException(itemKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    private void makeSureItemCoverHasSameItem(List<LongIdKey> itemCoverKeys) throws HandlerException {
-        try {
-            LongIdKey parent = itemCoverInfoMaintainService.get(itemCoverKeys.get(0)).getItemKey();
-            if (Objects.isNull(parent)) {
-                throw new IllegalItemCoverStateException(itemCoverKeys.get(0));
-            }
-            for (int i = 1; i < itemCoverKeys.size(); i++) {
-                LongIdKey currKey = itemCoverInfoMaintainService.get(itemCoverKeys.get(i)).getItemKey();
-                if (!Objects.equals(parent, currKey)) {
-                    throw new IllegalItemCoverStateException(itemCoverKeys.get(i));
-                }
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
 }
