@@ -51,7 +51,7 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
 
             // 3. 获取项目封面对应的项目，并确认用户有权限操作项目。
             ItemCoverInfo itemCoverInfo = itemCoverInfoMaintainService.get(itemCoverKey);
-            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemCoverInfo.getItemKey());
+            operateHandlerValidator.makeSureUserInspectPermittedForItem(userKey, itemCoverInfo.getItemKey());
 
             // 4. 下载项目封面。
             byte[] content = ftpHandler.getFileContent(
@@ -78,7 +78,7 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
             operateHandlerValidator.makeSureItemExists(itemKey);
 
             // 3. 确认用户有权限操作项目。
-            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemKey);
+            operateHandlerValidator.makeSureUserModifyPermittedForItem(userKey, itemKey);
 
             // 4. 分配主键。
             LongIdKey itemCoverKey = keyFetcher.fetchKey();
@@ -122,7 +122,7 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
 
             // 3. 获取项目封面对应的项目，并确认用户有权限操作项目。
             ItemCoverInfo itemCoverInfo = itemCoverInfoMaintainService.get(itemCoverKey);
-            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemCoverInfo.getItemKey());
+            operateHandlerValidator.makeSureUserModifyPermittedForItem(userKey, itemCoverInfo.getItemKey());
 
             // 4. 如果存在 ItemCover 文件，则删除。
             if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_ITEM_COVER}, getFileName(itemCoverKey))) {

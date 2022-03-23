@@ -124,7 +124,53 @@ public class OperateHandlerValidator {
         }
     }
 
-    public void makeSureUserPermittedForAssetCatalog(StringIdKey userKey, LongIdKey assetCatalogKey)
+    @SuppressWarnings("DuplicatedCode")
+    public void makeSureUserInspectPermittedForAssetCatalog(StringIdKey userKey, LongIdKey assetCatalogKey)
+            throws HandlerException {
+        try {
+            // 1. 构造 Poac 主键。
+            PoacKey poacKey = new PoacKey(assetCatalogKey.getLongId(), userKey.getStringId());
+
+            // 2. 查看 Poac 实体是否存在，如果不存在，则没有权限。
+            if (!poacMaintainService.exists(poacKey)) {
+                throw new UserNotPermittedException(userKey, assetCatalogKey);
+            }
+
+            // 3. 查看 Poac.permissionLevel 是否为 Poac.PERMISSION_LEVEL_OWNER 或 Poac.PERMISSION_LEVEL_MODIFIER，
+            // 如果不是，则没有权限。
+            Poac poac = poacMaintainService.get(poacKey);
+            if (Objects.equals(poac.getPermissionLevel(), Constants.PERMISSION_LEVEL_OWNER)) {
+                return;
+            }
+            if (Objects.equals(poac.getPermissionLevel(), Constants.PERMISSION_LEVEL_MODIFIER)) {
+                return;
+            }
+            if (Objects.equals(poac.getPermissionLevel(), Constants.PERMISSION_LEVEL_GUEST)) {
+                return;
+            }
+            throw new UserNotPermittedException(userKey, assetCatalogKey);
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureUserInspectPermittedForItem(StringIdKey userKey, LongIdKey itemKey) throws HandlerException {
+        try {
+            // 1. 查找指定的银行卡是否绑定账本，如果不绑定账本，则抛出银行卡状态异常。
+            Item item = itemMaintainService.get(itemKey);
+            if (Objects.isNull(item.getAssetCatalogKey())) {
+                throw new IllegalItemStateException(itemKey);
+            }
+
+            // 2. 取出银行卡的账本外键，判断用户是否拥有该账本的权限。
+            makeSureUserInspectPermittedForAssetCatalog(userKey, item.getAssetCatalogKey());
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    public void makeSureUserModifyPermittedForAssetCatalog(StringIdKey userKey, LongIdKey assetCatalogKey)
             throws HandlerException {
         try {
             // 1. 构造 Poac 主键。
@@ -150,7 +196,7 @@ public class OperateHandlerValidator {
         }
     }
 
-    public void makeSureUserPermittedForItem(StringIdKey userKey, LongIdKey itemKey) throws HandlerException {
+    public void makeSureUserModifyPermittedForItem(StringIdKey userKey, LongIdKey itemKey) throws HandlerException {
         try {
             // 1. 查找指定的银行卡是否绑定账本，如果不绑定账本，则抛出银行卡状态异常。
             Item item = itemMaintainService.get(itemKey);
@@ -159,13 +205,13 @@ public class OperateHandlerValidator {
             }
 
             // 2. 取出银行卡的账本外键，判断用户是否拥有该账本的权限。
-            makeSureUserPermittedForAssetCatalog(userKey, item.getAssetCatalogKey());
+            makeSureUserModifyPermittedForAssetCatalog(userKey, item.getAssetCatalogKey());
         } catch (ServiceException e) {
             throw new HandlerException(e);
         }
     }
 
-    public void makeSureUserPermittedForItemFileInfo(StringIdKey userKey, LongIdKey itemFileInfoKey)
+    public void makeSureUserModifyPermittedForItemFileInfo(StringIdKey userKey, LongIdKey itemFileInfoKey)
             throws HandlerException {
         try {
             // 1. 查找指定的项目文件信息是否绑定项目，如果不绑定项目，则抛出项目文件信息状态异常。
@@ -175,7 +221,7 @@ public class OperateHandlerValidator {
             }
 
             // 2. 取出项目文件信息的项目外键，判断用户是否拥有该项目的权限。
-            makeSureUserPermittedForItem(userKey, itemFileInfo.getItemKey());
+            makeSureUserModifyPermittedForItem(userKey, itemFileInfo.getItemKey());
         } catch (ServiceException e) {
             throw new HandlerException(e);
         }

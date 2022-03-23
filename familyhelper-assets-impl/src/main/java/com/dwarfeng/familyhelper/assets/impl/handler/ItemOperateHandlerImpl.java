@@ -63,7 +63,7 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
             operateHandlerValidator.makeSureLabelExists(labelKeys);
 
             // 5. 确认用户有权限操作指定的资产目录。
-            operateHandlerValidator.makeSureUserPermittedForAssetCatalog(userKey, assetCatalogKey);
+            operateHandlerValidator.makeSureUserModifyPermittedForAssetCatalog(userKey, assetCatalogKey);
 
             // 6. 确认项目与父项目的资产目录存在。
             operateHandlerValidator.makeSureAssetCatalogIdenticalForAssetCatalog(parentKey, assetCatalogKey);
@@ -119,7 +119,7 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
             operateHandlerValidator.makeSureLabelExists(labelKeys);
 
             // 5. 确认用户有权限操作指定的项目。
-            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemKey);
+            operateHandlerValidator.makeSureUserModifyPermittedForItem(userKey, itemKey);
 
             // 6. 确认项目与父项目的资产目录存在。
             operateHandlerValidator.makeSureAssetCatalogIdenticalForAssetItem(parentKey, itemKey);
@@ -165,7 +165,7 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
             operateHandlerValidator.makeSureItemExists(itemKey);
 
             // 3. 确认用户有权限操作指定的银行卡。
-            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemKey);
+            operateHandlerValidator.makeSureUserModifyPermittedForItem(userKey, itemKey);
 
             // 4. 资产目录对应项目数量减少。
             Item item = itemMaintainService.get(itemKey);

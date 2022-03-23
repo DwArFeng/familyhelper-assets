@@ -82,7 +82,7 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
             operateHandlerValidator.makeSureAssetCatalogExists(assetCatalogKey);
 
             // 3. 确认用户有权限操作指定的资产目录。
-            operateHandlerValidator.makeSureUserPermittedForAssetCatalog(userKey, assetCatalogKey);
+            operateHandlerValidator.makeSureUserModifyPermittedForAssetCatalog(userKey, assetCatalogKey);
 
             // 4. 根据 assetCatalogUpdateInfo 以及更新的规则设置 资产目录 实体。
             AssetCatalog assetCatalog = assetCatalogMaintainService.get(assetCatalogKey);
@@ -108,7 +108,7 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
             operateHandlerValidator.makeSureAssetCatalogExists(assetCatalogKey);
 
             // 3. 确认用户有权限操作指定的资产目录。
-            operateHandlerValidator.makeSureUserPermittedForAssetCatalog(userKey, assetCatalogKey);
+            operateHandlerValidator.makeSureUserModifyPermittedForAssetCatalog(userKey, assetCatalogKey);
 
             // 4. 删除指定主键的资产目录。
             assetCatalogMaintainService.delete(assetCatalogKey);
@@ -143,7 +143,7 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
             operateHandlerValidator.makeSureAssetCatalogExists(assetCatalogKey);
 
             // 5. 确认用户有权限操作指定的资产目录。
-            operateHandlerValidator.makeSureUserPermittedForAssetCatalog(ownerUserKey, assetCatalogKey);
+            operateHandlerValidator.makeSureUserModifyPermittedForAssetCatalog(ownerUserKey, assetCatalogKey);
 
             // 6. 通过入口信息组合权限实体，并进行插入或更新操作。
             String permissionLabel;
@@ -190,7 +190,7 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
             operateHandlerValidator.makeSureAssetCatalogExists(assetCatalogKey);
 
             // 4. 确认用户有权限操作指定的资产目录。
-            operateHandlerValidator.makeSureUserPermittedForAssetCatalog(ownerUserKey, assetCatalogKey);
+            operateHandlerValidator.makeSureUserModifyPermittedForAssetCatalog(ownerUserKey, assetCatalogKey);
 
             // 5. 通过入口信息组合权限实体主键，并进行存在删除操作。
             PoacKey poacKey = new PoacKey(assetCatalogKey.getLongId(), targetUserKey.getStringId());

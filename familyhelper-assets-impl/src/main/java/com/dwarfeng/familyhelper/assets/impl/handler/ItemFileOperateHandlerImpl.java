@@ -49,7 +49,7 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
 
             // 3. 获取项目文件对应的项目，并确认用户有权限操作项目。
             ItemFileInfo itemFileInfo = itemFileInfoMaintainService.get(itemFileKey);
-            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemFileInfo.getItemKey());
+            operateHandlerValidator.makeSureUserInspectPermittedForItem(userKey, itemFileInfo.getItemKey());
 
             // 4. 下载项目文件。
             byte[] content = ftpHandler.getFileContent(
@@ -80,7 +80,7 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
             operateHandlerValidator.makeSureItemExists(itemKey);
 
             // 3. 确认用户有权限操作项目。
-            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemKey);
+            operateHandlerValidator.makeSureUserModifyPermittedForItem(userKey, itemKey);
 
             // 4. 分配主键。
             LongIdKey itemFileKey = keyFetcher.fetchKey();
@@ -121,7 +121,7 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
             operateHandlerValidator.makeSureItemFileExists(itemFileKey);
 
             // 3. 确认用户有权限操作项目文件信息。
-            operateHandlerValidator.makeSureUserPermittedForItemFileInfo(userKey, itemFileKey);
+            operateHandlerValidator.makeSureUserModifyPermittedForItemFileInfo(userKey, itemFileKey);
 
             // 4. 项目文件内容并存储（覆盖）。
             byte[] content = itemFileUpdateInfo.getContent();
@@ -151,7 +151,7 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
 
             // 3. 获取项目文件对应的项目，并确认用户有权限操作项目。
             ItemFileInfo itemFileInfo = itemFileInfoMaintainService.get(itemFileKey);
-            operateHandlerValidator.makeSureUserPermittedForItem(userKey, itemFileInfo.getItemKey());
+            operateHandlerValidator.makeSureUserModifyPermittedForItem(userKey, itemFileInfo.getItemKey());
 
             // 4. 如果存在 ItemFile 文件，则删除。
             if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_ITEM_FILE}, getFileName(itemFileKey))) {
