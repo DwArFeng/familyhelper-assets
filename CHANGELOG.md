@@ -22,7 +22,8 @@
 
 #### Bug修复
 
-- (无)
+- 修复 ItemFileInfo 删除时不能级联删除相关文件的 bug。
+- 修复 ItemCoverInfo 删除时不能级联删除相关文件的 bug。
 
 #### 功能移除
 

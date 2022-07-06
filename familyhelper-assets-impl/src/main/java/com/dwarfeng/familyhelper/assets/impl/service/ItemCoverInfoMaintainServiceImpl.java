@@ -2,9 +2,9 @@ package com.dwarfeng.familyhelper.assets.impl.service;
 
 import com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemCoverInfo;
 import com.dwarfeng.familyhelper.assets.stack.service.ItemCoverInfoMaintainService;
+import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
@@ -19,12 +19,12 @@ import java.util.List;
 @Service
 public class ItemCoverInfoMaintainServiceImpl implements ItemCoverInfoMaintainService {
 
-    private final GeneralBatchCrudService<LongIdKey, ItemCoverInfo> crudService;
+    private final CustomBatchCrudService<LongIdKey, ItemCoverInfo> crudService;
     private final DaoOnlyEntireLookupService<ItemCoverInfo> entireLookupService;
     private final DaoOnlyPresetLookupService<ItemCoverInfo> presetLookupService;
 
     public ItemCoverInfoMaintainServiceImpl(
-            GeneralBatchCrudService<LongIdKey, ItemCoverInfo> crudService,
+            CustomBatchCrudService<LongIdKey, ItemCoverInfo> crudService,
             DaoOnlyEntireLookupService<ItemCoverInfo> entireLookupService,
             DaoOnlyPresetLookupService<ItemCoverInfo> presetLookupService
     ) {
