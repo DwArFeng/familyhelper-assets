@@ -23,6 +23,8 @@ public interface ItemMaintainService extends BatchCrudService<LongIdKey, Item>, 
     String CHILD_FOR_ASSET_CATALOG = "child_for_asset_catalog";
     String CHILD_FOR_LABEL = "child_for_label";
     String CHILD_FOR_ASSET_CATALOG_ROOT = "child_for_asset_catalog_root";
+    String NAME_LIKE = "name_like";
+    String CHILD_FOR_ASSET_CATALOG_NAME_LIKE = "child_for_asset_catalog_name_like";
 
     boolean existsLabelRelation(LongIdKey itemIdKey, StringIdKey labelIdKey) throws ServiceException;
 

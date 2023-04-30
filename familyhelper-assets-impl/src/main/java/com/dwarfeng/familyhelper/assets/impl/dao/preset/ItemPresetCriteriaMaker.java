@@ -5,6 +5,7 @@ import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,12 @@ public class ItemPresetCriteriaMaker implements PresetCriteriaMaker {
                 break;
             case ItemMaintainService.CHILD_FOR_ASSET_CATALOG_ROOT:
                 childForAssetCatalogRoot(detachedCriteria, objects);
+                break;
+            case ItemMaintainService.NAME_LIKE:
+                nameLike(detachedCriteria, objects);
+                break;
+            case ItemMaintainService.CHILD_FOR_ASSET_CATALOG_NAME_LIKE:
+                childForAssetCatalogNameLike(detachedCriteria, objects);
                 break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
@@ -91,6 +98,32 @@ public class ItemPresetCriteriaMaker implements PresetCriteriaMaker {
                 );
             }
             detachedCriteria.add(Restrictions.isNull("parentLongId"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    private void nameLike(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            String pattern = (String) objects[0];
+            detachedCriteria.add(Restrictions.like("name", pattern, MatchMode.ANYWHERE));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    private void childForAssetCatalogNameLike(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("assetCatalogLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objects[0];
+                detachedCriteria.add(
+                        Restrictions.eqOrIsNull("assetCatalogLongId", longIdKey.getLongId())
+                );
+            }
+            String pattern = (String) objects[1];
+            detachedCriteria.add(Restrictions.like("name", pattern, MatchMode.ANYWHERE));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
         }

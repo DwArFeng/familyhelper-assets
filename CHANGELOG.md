@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- 增加预设查询。
+  - ItemMaintainService.NAME_LIKE。
+  - ItemMaintainService.CHILD_FOR_ASSET_CATALOG_NAME_LIKE。
+
 - 优化项目结构，增加项目目录。
   - `./confext/`。
   - `./libext/`。
