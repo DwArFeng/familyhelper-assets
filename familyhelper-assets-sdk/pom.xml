@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -16,14 +20,14 @@
 
     <properties>
         <!-- 进行工程编码声明 -->
-        <!-- 进行JDK版本声明 -->
+        <!-- 进行 JDK 版本声明 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
-        <!-- javassist组件 -->
+        <!-- Javassist 组件 -->
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
@@ -34,12 +38,12 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- AspectJ框架 -->
+        <!-- AspectJ 框架 -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
         </dependency>
-        <!-- Spring框架 -->
+        <!-- Spring 框架 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -61,12 +65,12 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- FastJson Json处理工具包 -->
+        <!-- FastJson Json 处理工具包 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-        <!-- dutil模块 -->
+        <!-- Dutil 模块 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>dutil-basic</artifactId>
@@ -80,17 +84,17 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
         </dependency>
-        <!-- Hibernate验证器 -->
+        <!-- Hibernate 验证器 -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-        <!-- EL组件 -->
+        <!-- EL 组件 -->
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.el</artifactId>
         </dependency>
-        <!-- Dozer模块 -->
+        <!-- Dozer 模块 -->
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
@@ -100,7 +104,7 @@
             <artifactId>dozer-spring</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- SnowFlake服务 -->
+        <!-- SnowFlake 服务 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>snowflake-distributed-service-api</artifactId>

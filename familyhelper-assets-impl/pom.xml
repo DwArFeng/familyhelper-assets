@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -16,7 +20,7 @@
 
     <properties>
         <!-- 进行工程编码声明 -->
-        <!-- 进行JDK版本声明 -->
+        <!-- 进行 JDK 版本声明 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -29,7 +33,7 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- AspectJ框架 -->
+        <!-- AspectJ 框架 -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
@@ -38,7 +42,7 @@
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
         </dependency>
-        <!-- Spring框架 -->
+        <!-- Spring 框架 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -56,32 +60,32 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
         </dependency>
-        <!-- Druid连接池 -->
+        <!-- Druid 连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
         </dependency>
-        <!-- Hibernate框架 -->
+        <!-- Hibernate 框架 -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
         </dependency>
-        <!-- MySql连接器 -->
+        <!-- MySql 连接器 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <!-- Redis客户端 -->
+        <!-- Redis 客户端 -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-        <!-- FastJson Json处理工具包 -->
+        <!-- FastJson Json 处理工具包 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-        <!-- Dozer模块 -->
+        <!-- Dozer 模块 -->
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
@@ -90,7 +94,7 @@
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer-spring</artifactId>
         </dependency>
-        <!-- Dubbo分布式包 -->
+        <!-- Dubbo 分布式包 -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo</artifactId>
@@ -111,7 +115,7 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-util</artifactId>
         </dependency>
-        <!-- dutil模块 -->
+        <!-- Dutil 模块 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>dutil-basic</artifactId>
@@ -125,12 +129,12 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
         </dependency>
-        <!-- SnowFlake服务 -->
+        <!-- SnowFlake 服务 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>snowflake-distributed-service-api</artifactId>
         </dependency>
-        <!-- subgrade组件 -->
+        <!-- Subgrade 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-stack</artifactId>
@@ -143,17 +147,17 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-impl</artifactId>
         </dependency>
-        <!-- dwarfeng-ftp组件 -->
+        <!-- Dwarfeng-ftp 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>dwarfeng-ftp</artifactId>
         </dependency>
-        <!-- spring-terminator组件 -->
+        <!-- Spring-terminator 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>spring-terminator</artifactId>
         </dependency>
-        <!-- spring-telqos组件 -->
+        <!-- Spring-telqos 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>spring-telqos-core</artifactId>
