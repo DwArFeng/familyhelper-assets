@@ -11,6 +11,12 @@ import com.dwarfeng.springterminator.sdk.util.ApplicationUtil;
 public class Launcher {
 
     public static void main(String[] args) {
-        ApplicationUtil.launch("classpath:spring/application-context*.xml");
+        ApplicationUtil.launch(new String[]{
+                "classpath:spring/application-context*.xml",
+                "file:opt/opt*.xml",
+                "file:optext/opt*.xml"
+        }, ctx -> {
+            // Do nothing here.
+        });
     }
 }

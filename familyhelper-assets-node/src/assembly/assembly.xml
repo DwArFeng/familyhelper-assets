@@ -70,6 +70,42 @@
             </includes>
             <fileMode>0644</fileMode>
         </fileSet>
+        <fileSet>
+            <outputDirectory>opt</outputDirectory>
+            <directory>src/main/resources/opt</directory>
+            <includes>
+                <include>README.md</include>
+                <include>*.xml</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>libext</outputDirectory>
+            <directory>src/main/resources/libext</directory>
+            <includes>
+                <include>README.md</include>
+                <include>*.xml</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>optext</outputDirectory>
+            <directory>src/main/resources/optext</directory>
+            <includes>
+                <include>README.md</include>
+                <include>*.xml</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>confext</outputDirectory>
+            <directory>src/main/resources/confext</directory>
+            <includes>
+                <include>README.md</include>
+                <include>*.properties</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
     </fileSets>
 
     <files>
