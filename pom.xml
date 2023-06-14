@@ -43,7 +43,7 @@
         <jetty.version>9.4.48.v20220622</jetty.version>
         <netty.version>4.1.86.Final</netty.version>
         <zookeeper.version>3.5.7</zookeeper.version>
-        <guava.version>31.1-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
         <curator.version>4.3.0</curator.version>
         <aspectj.version>1.8.2</aspectj.version>
         <hibernate.version>5.4.24.Final</hibernate.version>
