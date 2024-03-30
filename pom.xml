@@ -10,7 +10,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>familyhelper-assets</artifactId>
-    <version>1.0.7.a</version>
+    <version>1.0.8.a-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -445,22 +445,22 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-assets-stack</artifactId>
-                <version>1.0.7.a</version>
+                <version>1.0.8.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-assets-sdk</artifactId>
-                <version>1.0.7.a</version>
+                <version>1.0.8.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-assets-impl</artifactId>
-                <version>1.0.7.a</version>
+                <version>1.0.8.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-assets-node</artifactId>
-                <version>1.0.7.a</version>
+                <version>1.0.8.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
