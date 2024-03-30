@@ -55,9 +55,7 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
             operateHandlerValidator.makeSureUserInspectPermittedForItem(userKey, itemCoverInfo.getItemKey());
 
             // 4. 下载项目封面。
-            byte[] content = ftpHandler.retrieveFile(
-                    new String[]{FtpConstants.PATH_ITEM_COVER}, getFileName(itemCoverKey)
-            );
+            byte[] content = ftpHandler.retrieveFile(FtpConstants.PATH_ITEM_COVER, getFileName(itemCoverKey));
 
             // 5. 拼接 ItemCover 并返回。
             return new ItemCover(itemCoverInfo.getOriginName(), content);
@@ -84,7 +82,7 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
 
             // 5. 项目封面内容并存储（覆盖）。
             byte[] content = itemCoverUploadInfo.getContent();
-            ftpHandler.storeFile(new String[]{FtpConstants.PATH_ITEM_COVER}, getFileName(itemCoverKey), content);
+            ftpHandler.storeFile(FtpConstants.PATH_ITEM_COVER, getFileName(itemCoverKey), content);
 
             // 6. 根据 itemCoverUploadInfo 构造 ItemCoverInfo，插入或更新。
             Date currentDate = new Date();
@@ -122,8 +120,8 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
             operateHandlerValidator.makeSureUserModifyPermittedForItem(userKey, itemCoverInfo.getItemKey());
 
             // 4. 如果存在 ItemCover 文件，则删除。
-            if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_ITEM_COVER}, getFileName(itemCoverKey))) {
-                ftpHandler.deleteFile(new String[]{FtpConstants.PATH_ITEM_COVER}, getFileName(itemCoverKey));
+            if (ftpHandler.existsFile(FtpConstants.PATH_ITEM_COVER, getFileName(itemCoverKey))) {
+                ftpHandler.deleteFile(FtpConstants.PATH_ITEM_COVER, getFileName(itemCoverKey));
             }
 
             // 5. 如果存在 ItemCoverInfo 实体，则删除。

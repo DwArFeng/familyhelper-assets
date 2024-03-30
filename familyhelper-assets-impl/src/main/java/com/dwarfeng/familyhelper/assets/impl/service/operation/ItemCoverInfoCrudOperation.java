@@ -69,8 +69,8 @@ public class ItemCoverInfoCrudOperation implements BatchCrudOperation<LongIdKey,
     @Override
     public void delete(LongIdKey key) throws Exception {
         // 如果存在票据文件，则删除票据文件。
-        if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_ITEM_COVER}, getCoverName(key))) {
-            ftpHandler.deleteFile(new String[]{FtpConstants.PATH_ITEM_COVER}, getCoverName(key));
+        if (ftpHandler.existsFile(FtpConstants.PATH_ITEM_COVER, getCoverName(key))) {
+            ftpHandler.deleteFile(FtpConstants.PATH_ITEM_COVER, getCoverName(key));
         }
 
         // 删除票据文件信息实体自身。

@@ -53,9 +53,7 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
             operateHandlerValidator.makeSureUserInspectPermittedForItem(userKey, itemFileInfo.getItemKey());
 
             // 4. 下载项目文件。
-            byte[] content = ftpHandler.retrieveFile(
-                    new String[]{FtpConstants.PATH_ITEM_FILE}, getFileName(itemFileKey)
-            );
+            byte[] content = ftpHandler.retrieveFile(FtpConstants.PATH_ITEM_FILE, getFileName(itemFileKey));
 
             // 5. 更新文件的查看时间。
             itemFileInfo.setInspectedDate(new Date());
@@ -86,7 +84,7 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
 
             // 5. 项目文件内容并存储（覆盖）。
             byte[] content = itemFileUploadInfo.getContent();
-            ftpHandler.storeFile(new String[]{FtpConstants.PATH_ITEM_FILE}, getFileName(itemFileKey), content);
+            ftpHandler.storeFile(FtpConstants.PATH_ITEM_FILE, getFileName(itemFileKey), content);
 
             // 6. 根据 itemFileUploadInfo 构造 ItemFileInfo，插入或更新。
             Date currentDate = new Date();
@@ -122,7 +120,7 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
 
             // 4. 项目文件内容并存储（覆盖）。
             byte[] content = itemFileUpdateInfo.getContent();
-            ftpHandler.storeFile(new String[]{FtpConstants.PATH_ITEM_FILE}, getFileName(itemFileKey), content);
+            ftpHandler.storeFile(FtpConstants.PATH_ITEM_FILE, getFileName(itemFileKey), content);
 
             // 5. 根据 itemFileUpdateInfo 更新字段。
             ItemFileInfo itemFileInfo = itemFileInfoMaintainService.get(itemFileKey);
@@ -149,8 +147,8 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
             operateHandlerValidator.makeSureUserModifyPermittedForItem(userKey, itemFileInfo.getItemKey());
 
             // 4. 如果存在 ItemFile 文件，则删除。
-            if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_ITEM_FILE}, getFileName(itemFileKey))) {
-                ftpHandler.deleteFile(new String[]{FtpConstants.PATH_ITEM_FILE}, getFileName(itemFileKey));
+            if (ftpHandler.existsFile(FtpConstants.PATH_ITEM_FILE, getFileName(itemFileKey))) {
+                ftpHandler.deleteFile(FtpConstants.PATH_ITEM_FILE, getFileName(itemFileKey));
             }
 
             // 5. 如果存在 ItemFileInfo 实体，则删除。
