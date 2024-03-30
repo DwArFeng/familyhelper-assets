@@ -60,3 +60,23 @@ buildNumber.properties
 #################
 /familyhelper-assets-impl/conf/
 /familyhelper-assets-node/conf/
+
+#################
+## Libext Files
+#################
+/familyhelper-assets-node/libext/
+
+#################
+## Opt Files
+#################
+/familyhelper-assets-node/opt/
+
+#################
+## Optext Files
+#################
+/familyhelper-assets-node/optext/
+
+#################
+## Confext Files
+#################
+/familyhelper-assets-node/confext/

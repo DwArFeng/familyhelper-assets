@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- 优化 `.gitignore` 配置。
+
 - dubbo 优化。
   - 优化 `dubbo/connection.properties` 中配置的键名。
 
