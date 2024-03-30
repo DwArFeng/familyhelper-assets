@@ -30,7 +30,7 @@ public class ItemOperateServiceImpl implements ItemOperateService {
         try {
             return itemOperateHandler.createItem(userKey, itemCreateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("创建项目时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("创建项目时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -40,7 +40,7 @@ public class ItemOperateServiceImpl implements ItemOperateService {
         try {
             itemOperateHandler.updateItem(userKey, itemUpdateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新项目时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("更新项目时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -49,7 +49,7 @@ public class ItemOperateServiceImpl implements ItemOperateService {
         try {
             itemOperateHandler.removeItem(userKey, itemKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除项目时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("删除项目时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

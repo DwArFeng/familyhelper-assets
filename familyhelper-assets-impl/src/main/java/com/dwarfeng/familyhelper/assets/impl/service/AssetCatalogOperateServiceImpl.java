@@ -34,7 +34,7 @@ public class AssetCatalogOperateServiceImpl implements AssetCatalogOperateServic
         try {
             return assetCatalogOperateHandler.createAssetCatalog(userKey, assetCatalogCreateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("创建资产目录时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("创建资产目录时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -44,7 +44,7 @@ public class AssetCatalogOperateServiceImpl implements AssetCatalogOperateServic
         try {
             assetCatalogOperateHandler.updateAssetCatalog(userKey, assetCatalogUpdateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新资产目录时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("更新资产目录时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -53,7 +53,7 @@ public class AssetCatalogOperateServiceImpl implements AssetCatalogOperateServic
         try {
             assetCatalogOperateHandler.removeAssetCatalog(userKey, assetCatalogKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除资产目录时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("删除资产目录时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -63,7 +63,7 @@ public class AssetCatalogOperateServiceImpl implements AssetCatalogOperateServic
         try {
             assetCatalogOperateHandler.upsertPermission(ownerUserKey, permissionUpsertInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("添加或更新资产目录的权限时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("添加或更新资产目录的权限时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -73,7 +73,7 @@ public class AssetCatalogOperateServiceImpl implements AssetCatalogOperateServic
         try {
             assetCatalogOperateHandler.removePermission(ownerUserKey, permissionRemoveInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("移除资产目录的权限时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("移除资产目录的权限时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

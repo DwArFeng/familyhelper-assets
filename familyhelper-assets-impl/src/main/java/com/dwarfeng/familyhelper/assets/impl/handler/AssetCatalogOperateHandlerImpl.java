@@ -11,6 +11,7 @@ import com.dwarfeng.familyhelper.assets.stack.bean.key.PoacKey;
 import com.dwarfeng.familyhelper.assets.stack.handler.AssetCatalogOperateHandler;
 import com.dwarfeng.familyhelper.assets.stack.service.AssetCatalogMaintainService;
 import com.dwarfeng.familyhelper.assets.stack.service.PoacMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -62,10 +63,8 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
 
             // 5. 返回生成的主键。
             return assetCatalogKey;
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -91,10 +90,8 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
 
             // 5. 更新资产目录实体。
             assetCatalogMaintainService.update(assetCatalog);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -112,10 +109,8 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
 
             // 4. 删除指定主键的资产目录。
             assetCatalogMaintainService.delete(assetCatalogKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -163,10 +158,8 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
                     "赋予用户 " + targetUserKey.getStringId() + " " + permissionLabel + "权限"
             );
             poacMaintainService.insertOrUpdate(poac);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -195,10 +188,8 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
             // 5. 通过入口信息组合权限实体主键，并进行存在删除操作。
             PoacKey poacKey = new PoacKey(assetCatalogKey.getLongId(), targetUserKey.getStringId());
             poacMaintainService.deleteIfExists(poacKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

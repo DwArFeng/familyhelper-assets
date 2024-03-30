@@ -30,7 +30,7 @@ public class ItemFileOperateServiceImpl implements ItemFileOperateService {
         try {
             return itemFileOperateHandler.downloadItemFile(userKey, itemFileKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("下载项目文件时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("下载项目文件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -39,7 +39,7 @@ public class ItemFileOperateServiceImpl implements ItemFileOperateService {
         try {
             itemFileOperateHandler.uploadItemFile(userKey, itemFileUploadInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("上传项目文件时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("上传项目文件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -48,7 +48,7 @@ public class ItemFileOperateServiceImpl implements ItemFileOperateService {
         try {
             itemFileOperateHandler.updateItemFile(userKey, itemFileUpdateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新项目文件时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("更新项目文件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -57,7 +57,7 @@ public class ItemFileOperateServiceImpl implements ItemFileOperateService {
         try {
             itemFileOperateHandler.removeItemFile(userKey, itemFileKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除项目文件时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("删除项目文件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

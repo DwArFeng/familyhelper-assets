@@ -8,10 +8,11 @@ import com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemFileInfo;
 import com.dwarfeng.familyhelper.assets.stack.handler.ItemFileOperateHandler;
 import com.dwarfeng.familyhelper.assets.stack.service.ItemFileInfoMaintainService;
 import com.dwarfeng.ftp.handler.FtpHandler;
-import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -22,19 +23,19 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
     private final ItemFileInfoMaintainService itemFileInfoMaintainService;
     private final FtpHandler ftpHandler;
 
-    private final KeyFetcher<LongIdKey> keyFetcher;
+    private final KeyGenerator<LongIdKey> keyGenerator;
 
     private final OperateHandlerValidator operateHandlerValidator;
 
     public ItemFileOperateHandlerImpl(
             ItemFileInfoMaintainService itemFileInfoMaintainService,
             FtpHandler ftpHandler,
-            KeyFetcher<LongIdKey> keyFetcher,
+            KeyGenerator<LongIdKey> keyGenerator,
             OperateHandlerValidator operateHandlerValidator
     ) {
         this.itemFileInfoMaintainService = itemFileInfoMaintainService;
         this.ftpHandler = ftpHandler;
-        this.keyFetcher = keyFetcher;
+        this.keyGenerator = keyGenerator;
         this.operateHandlerValidator = operateHandlerValidator;
     }
 
@@ -52,7 +53,7 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
             operateHandlerValidator.makeSureUserInspectPermittedForItem(userKey, itemFileInfo.getItemKey());
 
             // 4. 下载项目文件。
-            byte[] content = ftpHandler.getFileContent(
+            byte[] content = ftpHandler.retrieveFile(
                     new String[]{FtpConstants.PATH_ITEM_FILE}, getFileName(itemFileKey)
             );
 
@@ -62,10 +63,8 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
 
             // 6. 拼接 ItemFile 并返回。
             return new ItemFile(itemFileInfo.getOriginName(), content);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -83,7 +82,7 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
             operateHandlerValidator.makeSureUserModifyPermittedForItem(userKey, itemKey);
 
             // 4. 分配主键。
-            LongIdKey itemFileKey = keyFetcher.fetchKey();
+            LongIdKey itemFileKey = keyGenerator.generate();
 
             // 5. 项目文件内容并存储（覆盖）。
             byte[] content = itemFileUploadInfo.getContent();
@@ -102,10 +101,8 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
             itemFileInfo.setInspectedDate(currentDate);
             itemFileInfo.setRemark("通过 familyhelper-assets 服务上传/更新项目文件");
             itemFileInfoMaintainService.insertOrUpdate(itemFileInfo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -133,10 +130,8 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
             itemFileInfo.setLength(content.length);
             itemFileInfo.setModifiedDate(new Date());
             itemFileInfoMaintainService.update(itemFileInfo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -160,10 +155,8 @@ public class ItemFileOperateHandlerImpl implements ItemFileOperateHandler {
 
             // 5. 如果存在 ItemFileInfo 实体，则删除。
             itemFileInfoMaintainService.deleteIfExists(itemFileKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 

@@ -10,6 +10,7 @@ import com.dwarfeng.familyhelper.assets.stack.handler.ItemOperateHandler;
 import com.dwarfeng.familyhelper.assets.stack.service.AssetCatalogMaintainService;
 import com.dwarfeng.familyhelper.assets.stack.service.ItemLabelMaintainService;
 import com.dwarfeng.familyhelper.assets.stack.service.ItemMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -90,10 +91,8 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
 
             // 10. 返回 项目 实体的主键。
             return itemKey;
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -148,10 +147,8 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
             ).getData().stream().map(ItemLabel::getKey).collect(Collectors.toList());
             itemMaintainService.batchDeleteLabelRelations(itemKey, labelKeysToDelete);
             itemMaintainService.batchAddLabelRelations(itemKey, labelKeys);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -175,10 +172,8 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
 
             // 5. 存在删除指定的项目。
             itemMaintainService.deleteIfExists(itemKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

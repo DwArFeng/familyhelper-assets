@@ -30,7 +30,7 @@ public class ItemCoverOperateServiceImpl implements ItemCoverOperateService {
         try {
             return itemCoverOperateHandler.downloadItemCover(userKey, itemCoverKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("下载项目封面时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("下载项目封面时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -39,7 +39,7 @@ public class ItemCoverOperateServiceImpl implements ItemCoverOperateService {
         try {
             itemCoverOperateHandler.uploadItemCover(userKey, itemCoverUploadInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("上传项目封面时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("上传项目封面时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -48,7 +48,7 @@ public class ItemCoverOperateServiceImpl implements ItemCoverOperateService {
         try {
             itemCoverOperateHandler.removeItemCover(userKey, itemCoverKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除项目封面时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("删除项目封面时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -58,7 +58,7 @@ public class ItemCoverOperateServiceImpl implements ItemCoverOperateService {
         try {
             itemCoverOperateHandler.updateItemCoverOrder(userKey, itemCoverOrderUpdateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新项目封面的顺序时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("更新项目封面的顺序时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

@@ -8,11 +8,12 @@ import com.dwarfeng.familyhelper.assets.stack.bean.entity.ItemCoverInfo;
 import com.dwarfeng.familyhelper.assets.stack.handler.ItemCoverOperateHandler;
 import com.dwarfeng.familyhelper.assets.stack.service.ItemCoverInfoMaintainService;
 import com.dwarfeng.ftp.handler.FtpHandler;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
-import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -24,19 +25,19 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
     private final ItemCoverInfoMaintainService itemCoverInfoMaintainService;
     private final FtpHandler ftpHandler;
 
-    private final KeyFetcher<LongIdKey> keyFetcher;
+    private final KeyGenerator<LongIdKey> keyGenerator;
 
     private final OperateHandlerValidator operateHandlerValidator;
 
     public ItemCoverOperateHandlerImpl(
             ItemCoverInfoMaintainService itemCoverInfoMaintainService,
             FtpHandler ftpHandler,
-            KeyFetcher<LongIdKey> keyFetcher,
+            KeyGenerator<LongIdKey> keyGenerator,
             OperateHandlerValidator operateHandlerValidator
     ) {
         this.itemCoverInfoMaintainService = itemCoverInfoMaintainService;
         this.ftpHandler = ftpHandler;
-        this.keyFetcher = keyFetcher;
+        this.keyGenerator = keyGenerator;
         this.operateHandlerValidator = operateHandlerValidator;
     }
 
@@ -54,16 +55,14 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
             operateHandlerValidator.makeSureUserInspectPermittedForItem(userKey, itemCoverInfo.getItemKey());
 
             // 4. 下载项目封面。
-            byte[] content = ftpHandler.getFileContent(
+            byte[] content = ftpHandler.retrieveFile(
                     new String[]{FtpConstants.PATH_ITEM_COVER}, getFileName(itemCoverKey)
             );
 
             // 5. 拼接 ItemCover 并返回。
             return new ItemCover(itemCoverInfo.getOriginName(), content);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -81,7 +80,7 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
             operateHandlerValidator.makeSureUserModifyPermittedForItem(userKey, itemKey);
 
             // 4. 分配主键。
-            LongIdKey itemCoverKey = keyFetcher.fetchKey();
+            LongIdKey itemCoverKey = keyGenerator.generate();
 
             // 5. 项目封面内容并存储（覆盖）。
             byte[] content = itemCoverUploadInfo.getContent();
@@ -104,10 +103,8 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
             ).getData().stream().findFirst().map(i -> i.getIndex() + 1).orElse(0);
             itemCoverInfo.setIndex(index);
             itemCoverInfoMaintainService.insertOrUpdate(itemCoverInfo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -131,10 +128,8 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
 
             // 5. 如果存在 ItemCoverInfo 实体，则删除。
             itemCoverInfoMaintainService.deleteIfExists(itemCoverKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -183,11 +178,8 @@ public class ItemCoverOperateHandlerImpl implements ItemCoverOperateHandler {
 
             // 8. 批量更新。
             itemCoverInfoMaintainService.batchUpdate(orderedItemCoverInfoList);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
-
 }

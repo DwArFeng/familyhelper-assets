@@ -8,10 +8,8 @@ import com.dwarfeng.familyhelper.assets.stack.cache.ItemPropertyCache;
 import com.dwarfeng.familyhelper.assets.stack.cache.ItemTypeIndicatorCache;
 import com.dwarfeng.familyhelper.assets.stack.cache.PoacCache;
 import com.dwarfeng.familyhelper.assets.stack.dao.*;
-import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
-import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
+import com.dwarfeng.subgrade.impl.generation.ExceptionKeyGenerator;
 import com.dwarfeng.subgrade.impl.service.*;
-import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -24,6 +22,7 @@ public class ServiceConfiguration {
 
     private final ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
     private final DaoConfiguration daoConfiguration;
+    private final GenerateConfiguration generateConfiguration;
 
     private final AssetCatalogCrudOperation assetCatalogCrudOperation;
     private final AssetCatalogDao assetCatalogDao;
@@ -51,19 +50,30 @@ public class ServiceConfiguration {
     private long poacTimeout;
 
     public ServiceConfiguration(
-            ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration, DaoConfiguration daoConfiguration,
-            AssetCatalogCrudOperation assetCatalogCrudOperation, AssetCatalogDao assetCatalogDao,
-            ItemCrudOperation itemCrudOperation, ItemDao itemDao,
-            ItemLabelCrudOperation itemLabelCrudOperation, ItemLabelDao itemLabelDao,
-            ItemPropertyDao itemPropertyDao, ItemPropertyCache itemPropertyCache,
-            ItemTypeIndicatorDao itemTypeIndicatorDao, ItemTypeIndicatorCache itemTypeIndicatorCache,
-            PoacDao poacDao, PoacCache poacCache,
+            ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
+            DaoConfiguration daoConfiguration,
+            GenerateConfiguration generateConfiguration,
+            AssetCatalogCrudOperation assetCatalogCrudOperation,
+            AssetCatalogDao assetCatalogDao,
+            ItemCrudOperation itemCrudOperation,
+            ItemDao itemDao,
+            ItemLabelCrudOperation itemLabelCrudOperation,
+            ItemLabelDao itemLabelDao,
+            ItemPropertyDao itemPropertyDao,
+            ItemPropertyCache itemPropertyCache,
+            ItemTypeIndicatorDao itemTypeIndicatorDao,
+            ItemTypeIndicatorCache itemTypeIndicatorCache,
+            PoacDao poacDao,
+            PoacCache poacCache,
             UserCrudOperation userCrudOperation,
-            ItemCoverInfoCrudOperation itemCoverInfoCrudOperation, ItemCoverInfoDao itemCoverInfoDao,
-            ItemFileInfoCrudOperation itemFileInfoCrudOperation, ItemFileInfoDao itemFileInfoDao
+            ItemCoverInfoCrudOperation itemCoverInfoCrudOperation,
+            ItemCoverInfoDao itemCoverInfoDao,
+            ItemFileInfoCrudOperation itemFileInfoCrudOperation,
+            ItemFileInfoDao itemFileInfoDao
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.daoConfiguration = daoConfiguration;
+        this.generateConfiguration = generateConfiguration;
         this.assetCatalogCrudOperation = assetCatalogCrudOperation;
         this.assetCatalogDao = assetCatalogDao;
         this.itemCrudOperation = itemCrudOperation;
@@ -84,15 +94,10 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public KeyFetcher<LongIdKey> longIdKeyKeyFetcher() {
-        return new SnowFlakeLongIdKeyFetcher();
-    }
-
-    @Bean
     public CustomBatchCrudService<LongIdKey, AssetCatalog> assetCatalogBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 assetCatalogCrudOperation,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -120,7 +125,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<LongIdKey, Item> itemCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
                 itemCrudOperation,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -157,7 +162,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<StringIdKey, ItemLabel> itemLabelCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
                 itemLabelCrudOperation,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -195,7 +200,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 itemPropertyDao,
                 itemPropertyCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 itemPropertyTimeout
@@ -226,7 +231,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 itemTypeIndicatorDao,
                 itemTypeIndicatorCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 itemTypeIndicatorTimeout
@@ -247,7 +252,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 poacDao,
                 poacCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 poacTimeout
@@ -276,7 +281,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<StringIdKey, User> userBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 userCrudOperation,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -286,7 +291,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<LongIdKey, ItemCoverInfo> itemCoverInfoCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
                 itemCoverInfoCrudOperation,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -314,7 +319,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<LongIdKey, ItemFileInfo> itemFileInfoCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
                 itemFileInfoCrudOperation,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

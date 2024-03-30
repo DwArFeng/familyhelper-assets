@@ -29,6 +29,6 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(ItemFileNotExistsException.class, ServiceExceptionCodes.ITEM_FILE_NOT_EXISTS);
         destination.put(IllegalItemFileStateException.class, ServiceExceptionCodes.ILLEGAL_ITEM_FILE_STATE);
         destination.put(AssetCatalogNotIdenticalException.class, ServiceExceptionCodes.ASSET_CATALOG_NOT_IDENTICAL);
-        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
+        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }
