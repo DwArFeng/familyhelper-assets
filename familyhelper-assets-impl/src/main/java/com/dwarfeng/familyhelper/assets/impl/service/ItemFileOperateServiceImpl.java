@@ -1,8 +1,6 @@
 package com.dwarfeng.familyhelper.assets.impl.service;
 
-import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemFile;
-import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemFileUpdateInfo;
-import com.dwarfeng.familyhelper.assets.stack.bean.dto.ItemFileUploadInfo;
+import com.dwarfeng.familyhelper.assets.stack.bean.dto.*;
 import com.dwarfeng.familyhelper.assets.stack.handler.ItemFileOperateHandler;
 import com.dwarfeng.familyhelper.assets.stack.service.ItemFileOperateService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
@@ -35,20 +33,49 @@ public class ItemFileOperateServiceImpl implements ItemFileOperateService {
     }
 
     @Override
-    public void uploadItemFile(StringIdKey userKey, ItemFileUploadInfo itemFileUploadInfo) throws ServiceException {
+    public ItemFileStream downloadItemFileStream(StringIdKey userKey, LongIdKey itemFileKey) throws ServiceException {
         try {
-            itemFileOperateHandler.uploadItemFile(userKey, itemFileUploadInfo);
+            return itemFileOperateHandler.downloadItemFileStream(userKey, itemFileKey);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("下载项目文件流时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
+
+    @Override
+    public void uploadItemFile(StringIdKey userKey, ItemFileUploadInfo uploadInfo) throws ServiceException {
+        try {
+            itemFileOperateHandler.uploadItemFile(userKey, uploadInfo);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("上传项目文件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
     @Override
-    public void updateItemFile(StringIdKey userKey, ItemFileUpdateInfo itemFileUpdateInfo) throws ServiceException {
+    public void uploadItemFileStream(StringIdKey userKey, ItemFileStreamUploadInfo uploadInfo)
+            throws ServiceException {
         try {
-            itemFileOperateHandler.updateItemFile(userKey, itemFileUpdateInfo);
+            itemFileOperateHandler.uploadItemFileStream(userKey, uploadInfo);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("上传项目文件流时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
+
+    @Override
+    public void updateItemFile(StringIdKey userKey, ItemFileUpdateInfo updateInfo) throws ServiceException {
+        try {
+            itemFileOperateHandler.updateItemFile(userKey, updateInfo);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("更新项目文件时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
+
+    @Override
+    public void updateItemFileStream(StringIdKey userKey, ItemFileStreamUpdateInfo updateInfo)
+            throws ServiceException {
+        try {
+            itemFileOperateHandler.updateItemFileStream(userKey, updateInfo);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("更新项目文件流时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
