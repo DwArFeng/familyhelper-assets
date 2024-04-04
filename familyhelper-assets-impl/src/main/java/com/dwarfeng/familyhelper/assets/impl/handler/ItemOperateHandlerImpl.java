@@ -42,6 +42,7 @@ public class ItemOperateHandlerImpl implements ItemOperateHandler {
         this.operateHandlerValidator = operateHandlerValidator;
     }
 
+    @SuppressWarnings("ExtractMethodRecommender")
     @Override
     public LongIdKey createItem(StringIdKey userKey, ItemCreateInfo itemCreateInfo) throws HandlerException {
         try {

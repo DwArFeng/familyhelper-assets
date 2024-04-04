@@ -114,6 +114,7 @@ public class AssetCatalogOperateHandlerImpl implements AssetCatalogOperateHandle
         }
     }
 
+    @SuppressWarnings("ExtractMethodRecommender")
     @Override
     public void upsertPermission(StringIdKey ownerUserKey, PermissionUpsertInfo permissionUpsertInfo)
             throws HandlerException {
