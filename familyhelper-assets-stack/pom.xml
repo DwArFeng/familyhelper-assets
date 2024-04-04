@@ -11,7 +11,7 @@
     <parent>
         <artifactId>familyhelper-assets</artifactId>
         <groupId>com.dwarfeng</groupId>
-        <version>1.0.8.a-SNAPSHOT</version>
+        <version>1.0.8.a</version>
     </parent>
 
     <artifactId>familyhelper-assets-stack</artifactId>
